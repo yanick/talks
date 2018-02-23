@@ -1,0 +1,9 @@
+
+
+## To Run Locally
+
+    $ npm install reveal-md
+
+    $ reveal-md --watch --disable-auto-open --preprocessor groom.js --css style.css tw.md
+
+
