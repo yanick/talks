@@ -6,4 +6,8 @@
 
     $ reveal-md --watch --disable-auto-open --preprocessor groom.js --css style.css tw.md
 
+## To Create a Static Version
+
+    $ reveal-md  --preprocessor groom.js --css style.css --static static --st atic-dirs public/ tw.md
+
 
