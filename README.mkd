@@ -1,0 +1,3 @@
+# Yanick's Talks
+
+### Taskwarrior - Toronto Perl Mongers, February 2018
