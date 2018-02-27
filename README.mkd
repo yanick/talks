@@ -4,5 +4,8 @@
 
 [video](https://youtu.be/FrCES7Zo9h4) /
 [slides](https://yanick.github.io/talks/taskwarrior/static) /
-[source](https://github.com/yanick/talks/tree/master/taskwarrior)
+[slides as pdf](https://yanick.github.io/talks/taskwarrior/Taskwarrior-and-Kusarigama.pdf) /
+[source](https://github.com/yanick/talks/tree/master/taskwarrior) 
+
+The slides are licensed under [CC-BY](https://github.com/yanick/talks/tree/master/taskwarrior/LICENSE-CC-BY.txt); go wild.
 
