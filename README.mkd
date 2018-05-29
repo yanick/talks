@@ -9,3 +9,7 @@
 
 The slides are licensed under [CC-BY](https://github.com/yanick/talks/tree/master/taskwarrior/LICENSE-CC-BY.txt); go wild.
 
+### InfluxDB - Ottawa Big Data, January 2017
+
+[slides](https://yanick.github.io/talks/influxdb/static) /
+[source](https://github.com/yanick/talks/tree/master/influxdb) 
