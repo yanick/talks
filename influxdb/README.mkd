@@ -1,0 +1,11 @@
+## To Run Locally
+
+    $ make install
+    $ make run
+
+## To Create a Static Version
+
+    $ make install
+    $ make static
+
+
