@@ -1,0 +1,1003 @@
+<style>
+li { margin-top: 0.75em; }
+h2 { margin-top: 2em; }
+.shx-topbar { display: none}
+</style>
+
+# So You Think You Can Dance, Halifax?
+
+<div align="center" class='vcenter'>
+<img style="heigth:90%" src="/sytycdh.jpg" />
+</div>
+
+# Who Am I?
+
+## Yanick Champoux
+
+* Work at [Pythian](http://www.pythian.com)
+* Perl hacker for 15 years
+* [CPAN Author](https://metacpan.org/author/YANICK)
+* [Blogger](http://techblog.babyl.ca)
+* Member of the Dancer Core Crew & Dancer 1 Release Steward
+
+# How I Got Involved in Dancer: A Cautionary Tale
+
+## Circa 3 years ago
+
+* \*some noise about that new Dancer web framework\*
+
+* "Meh. [Catalyst](https://metacpan.org/release/Catalyst-Runtine) is good. Me
+likes Catalyst."
+
+# How I Got Involved in Dancer: Only a Taste
+
+*  \*noise doesn't die down\*
+
+* "Maybe I should try, just for the sake of knowing what it's like."
+
+# How I Got Involved in Dancer: The Hooks Bite In
+
+* Go on hacking [Dancer::Template::Mason](https://metacpan.org/release/Dancer-Template-Mason)
+
+* "Oh geez, is that a Dancer bug? Let's submit a patch!"
+
+# How I Got Involved in Dancer: Uh Oh...
+
+* "What a bunch of nice people! Let's submit more patches!"
+
+# How I Got Involved in Dancer: Tactical Failure
+
+* "So there's this guy who keep sending patches. What should we do to get rid
+of him?"
+
+* "Make him part of the core team?"
+
+* "Brilliant! That's a plan that can't possibly backfire!"
+
+# How I Got Involved in Dancer: Dancer 1 Takeover
+
+<div align="center" class='vcenter'>
+<img src="/sad-puppy-dancer.jpg" />
+</div>
+
+<!--
+
+# TOC
+
+* What is Dancer
+* Create app
+* Routes
+* Templates
+* Plugins
+* Test
+
+-->
+
+# What the Deuce is Dancer?
+
+<div align="center" class='vcenter'>
+<img src="/dancer_logo.png" />
+</div>
+
+* Perl micro-web application framework
+
+* Originaly based on Ruby's [Sinatra](http://www.sinatrarb.com/)
+
+# Web Framework?
+
+Provide the basic frame to build websites.
+
+<div align="center" >
+<img src="/framework_to_final.png" style="heigth: 400px;" />
+</div>
+
+
+# Micro?
+
+* Intuitive, minimalist, expressive syntax, few dependencies, *fast*
+
+* Rather than all-encompassing, rigid, heavy
+
+* Small != Trivial (It's going to be awesomely perfect for 95% of web apps)
+
+# Awesome Features
+
+* Treasure trove of plugins + templates
+
+* Serializing, sessions, cookies, all dealt with
+
+* Hooks
+
+* REST/Ajax-friendly
+
+* Development-friendly (standalone server, debugging facilities)
+
+# What is it (Maybe) Not Good For?
+
+* Project with many templating systems
+
+* Project touching many teams and must have rigid MVC structure
+
+* Lots of action chaining
+
+* Many apps must run under the same interpreter (Dancer 2 fixes that)
+
+* Project is godawfully complex with lots of eldritch magic under the hood
+
+# Architecture
+
+## Route Dispatcher
+
+    GET /welcome          -> send welcome web page
+    PUT /user/(username)  -> set user info
+    ...
+
+## Not a MVC (out of the box)
+
+* Template support baked-in. (View)
+
+* Model/Controller can be mashed together. Or not.
+
+# Big Brothers
+
+## [Catalyst](http://p3rl.org/Catalyst-Runtime)
+
+Insanely flexible
+
+## [Mojolicious](http://p3rl.org/Mojolicious)
+
+one-stop solution to everything (yes, everything)
+
+# Can I Have the First Dance?
+
+* Markdown: cool for slides
+
+``` html
+# Can I Have the First Dance?
+
+* Markdown: cool for slides
+
+ ```html
+    # Can I Have the First Dance?
+
+    * Markdown: cool for slides
+
+    ```html
+        Present-ception!
+    ```
+
+    * Markdown-to-html web app!
+ ```
+
+* Markdown-to-html web app!
+```
+
+* Markdown-to-html web app!
+
+# First Dance
+
+``` perl
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+
+```
+
+# First Dance
+
+``` perl
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use Text::Markdown 'markdown';
+
+my $webpage = markdown( join '', <> );
+
+```
+
+# First Dance
+
+``` perl
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use Text::Markdown 'markdown';
+use Dancer ':syntax';
+
+my $webpage = markdown( join '', <> );
+
+get '/' => sub { $webpage };
+
+dance;
+
+```
+
+# First Dance
+
+``` sh
+$ perl micro_chorus.pl prez.mkd
+>> Dancer 1.3115 server 17163 listening on http://0.0.0.0:3000
+== Entering the development dance floor ...
+```
+
+## TADAH!
+
+# Thank You!
+
+## Any question?
+
+## (just kidding)
+
+# Slow Dancing
+
+# Step 0 - Installation
+
+``` sh
+$ sudo apt-get libdancer-perl
+
+or 
+
+$ cpan Dancer
+
+or
+
+$ cpanm Dancer
+(using cpanminus - https://metacpan.org/release/App::cpanminus)
+
+or
+
+$ git clone http://github.com/perldancer/Dancer
+$ cd Dancer
+$ perl Makefile.PL && make test && make install
+```
+
+# Step 1 - Let There Be an App!
+
+```
+$ dancer -a my_app
++ my_app
++ my_app/bin
++ my_app/bin/app.pl
++ my_app/config.yml
++ my_app/environments
++ my_app/environments/development.yml
++ my_app/environments/production.yml
++ my_app/views
++ my_app/views/index.tt
++ my_app/views/layouts
++ my_app/views/layouts/main.tt
++ my_app/MANIFEST.SKIP
++ my_app/lib
++ my_app/lib/
++ my_app/lib/mww.pm
++ my_app/public
++ my_app/public/css
++ my_app/public/css/style.css
++ my_app/public/css/error.css
++ my_app/public/images
++ my_app/public/500.html
++ my_app/public/404.html
++ my_app/public/dispatch.fcgi
++ my_app/public/dispatch.cgi
++ my_app/public/javascripts
++ my_app/public/javascripts/jquery.js
++ my_app/t
++ my_app/t/002_index_route.t
++ my_app/t/001_base.t
++ my_app/Makefile.PL
+```
+
+# The App's Launching Script
+
+## my_app/bin/app.pl
+
+``` perl
+#!/usr/bin/env perl
+use Dancer;
+use Foo;
+dance;
+```
+
+# Configuration Files
+
+``` sh
++ my_app/config.yml
++ my_app/environments/development.yml
++ my_app/environments/production.yml
+```
+
+## config.yml
+
+``` c
+    appname: "Foo"
+
+    layout: "main"
+
+    charset: "UTF-8"
+
+    template: "simple"
+
+    # template: "template_toolkit"
+    # engines:
+    #   template_toolkit:
+    #     start_tag: '[%'
+    #     end_tag:   '%]'
+```
+
+# config environments
+
+## development
+
+``` c
+logger: "console"
+
+log: "core"
+
+warnings: 1
+
+show_errors: 1
+
+auto_reload: 0
+```
+
+# Template files
+
+``` sh
++ my_app/views
++ my_app/views/index.tt
++ my_app/views/layouts
++ my_app/views/layouts/main.tt
+```
+
+Typical template system: [Template
+Toolkit](https://metacpan.org/release/Template)
+
+# The App Core
+
+## my_app/lib/my_app.pm
+
+``` perl
+package Foo;
+use Dancer ':syntax';
+
+our $VERSION = '0.1';
+
+get '/' => sub {
+    template 'index';
+};
+
+true;
+```
+
+# Static Files
+
+``` sh
++ my_app/public/css/style.css
++ my_app/public/css/error.css
++ my_app/public/images
++ my_app/public/500.html
++ my_app/public/404.html
++ my_app/public/dispatch.fcgi
++ my_app/public/dispatch.cgi
++ my_app/public/javascripts
++ my_app/public/javascripts/jquery.js
+```
+
+* Comes with batteries included
+
+* Ready for CGI and FCGI
+
+# Tests
+
+``` sh
++ my_app/t/001_base.t
++ my_app/t/002_index_route.t
+```
+
+# Distribution Miscallenous 
+
+``` sh
++ my_app/MANIFEST.SKIP
++ my_app/Makefile.PL
+```
+
+# Let's Dance!
+
+``` sh
+$ ./bin/app.pl
+
+[3481]  core @0.000016> loading Dancer::Handler::Standalone handler
+[3481]  core @0.000333> loading handler 'Dancer::Handler::Standalone'
+
+>> Dancer 1.3071 server 3481 listening on http://0.0.0.0:3000
+== Entering the development dance floor ...
+```
+
+# ![basic application](/basic_app.png)
+
+
+# Deployment
+
+Run over the Plack middleware (inspired from [Rack][rack])
+
+![Oreo](/oreo_plack.png)
+
+# Deployment modes
+
+* Single-threaded dev server
+* Fastcgi
+* CGI
+* Standalone web server
+* Static website (via [Wallflower][wf])
+
+[rack]: http://en.wikipedia.org/wiki/Rack_%28web_server_interface%29
+[wf]: https://metacpan.org/release/App-Wallflower
+
+# Single-threaded test server
+
+```sh
+$ ./bin/app.pl
+```
+
+# High-performance Standalone Web Server
+
+``` sh
+$ plackup --server Twiggy --port 9090 --host 127.0.0.1 ./bin/app.pl
+
+$ plackup --server Starman --port 9090 --host 127.0.0.1 ./bin/app.pl
+```
+
+# Fast-CGI
+
+``` sh
+$ plackup -s FCGI --listen /tmp/app.fcgi ./bin/app.pl
+```
+
+# CGI
+
+``` perl
+    AddHandler cgi-script .cgi
+    ScriptAlias / /path/to/app/public/dispatch.cgi/
+```
+
+# The Heart That Provides the Beat
+
+``` perl
+package MyApp;
+
+use Dancer ':syntax';
+
+our $VERSION = '0.1';
+
+get '/' => sub {
+    template 'index';
+};
+
+true;
+```
+
+# Routes
+
+## http_verb route => what_to_do;
+
+``` perl
+
+    get '/' => sub {
+        return "hello there!";
+    };
+```
+
+# Basic
+
+Verbs: get, post, del, put, post
+
+``` perl
+get '/about' => sub {
+    return 'this is an app';
+};
+
+post '/man' => sub {
+    "I've been known to ring twice";
+};
+
+any [ qw/ get post put del / ] => '/rome' => sub {
+    'You reached Rome.'
+};
+```
+
+# Named Captures
+
+``` perl
+get '/login/:name' => sub { 
+    'Hi ' . param( 'name' );
+};
+```
+
+* matches /login/alice
+
+* but not /login/foo/bar
+
+# Unnamed Captures
+
+``` perl
+get '/path/*/*' => sub {
+    my ( $from, $to ) = splat;
+    return "going from $from to $to";
+}
+```
+
+* matches `/path/here/there`
+
+* but not `/path/here/there/anywhere` 
+
+* or `/path/finder`
+
+# Megasplat
+
+``` perl
+get '/tags/**' => sub {
+    my ( $tags ) = splat;
+
+    return 'tags selected: ' . join ',', @$tag;
+}
+```
+
+* matches `/tags/dancer`
+
+* and `/tags/dancer/web/stuff`
+
+
+# Good ol' Regexps
+
+``` perl
+put qr#^/plate/(cake|pie)/slice/(\d+)$# => sub {
+    my( $food, $slices ) = splat;
+
+    return "yum, delicious $food " x $slices;
+};
+```
+
+* matches `/plate/cake/slice/1`
+
+* but not `/plate/icecream/slice/3`
+
+# Flow control and co
+
+## prefix
+
+```perl
+
+prefix '/foo';
+
+get '/bar' => sub { ... };
+```
+
+## pass
+
+```perl
+get '/user/:name' => sub {
+    # yanick is "special"
+    pass if param('name') eq 'yanick';
+    ...
+};
+
+get '/user/yanick' => sub {
+    ...
+};
+```
+
+
+## halt 
+
+```perl
+post '/movie/:title' => sub {
+    halt("disk is full") if disk_usage() > 0.90;
+    ...
+};
+```
+
+# Flow control and co
+
+## send_error
+
+```perl
+send_error "wut?", 404;
+```
+
+## send_file
+
+```perl
+
+get '/puppy' => sub {
+    my $file = $puppy_pic[rand @puppy_pic];
+    send_file $file;
+};
+
+```
+
+## upload
+
+``` perl
+post '/upload' => sub {
+    my $up = upload('foo');
+    my $content = $up->content;
+    ...
+};
+```
+
+# Flow control and co
+
+## forward 
+
+``` perl
+get '/this' => sub {
+    forward '/that';
+};
+```
+
+## redirect 
+
+``` perl
+get '/search/:term' => sub {
+    redirect 'http://google.ca/?s=' . param('term');
+};
+```
+
+
+# Templates
+
+``` perl
+get '/about' => sub {
+    return q{ 
+        <html>
+            <body>
+                <h1>This is my app</h1>
+            </body>
+        </html>
+    };
+};
+```
+
+## Yuck
+
+# Templates
+
+``` perl
+get '/about' => sub {
+    template 'about' => {
+        app_name => 'Milky Way War'
+    };
+};
+```
+
+# In 'about.mason'
+
+``` html
+<%args>
+$game_name
+</%args>
+<html>
+    <body>
+        <h1><% $game_name %></h1>
+    </body>
+</html>
+```
+
+# 'about.mason' with layouts
+
+``` html
+<%args>
+$game_name
+</%args>
+<h1><% $game_name %></h1>
+```
+
+# in `config.yml`
+
+``` c
+template: mason
+
+engines:
+    mason:
+        default_escape_flags: ['h']
+```
+
+# Template Choices
+
+## Dancer::Template::*
+
+* [Alloy](http://p3rl.com/Dancer-Template-Alloy)
+* [Ctpp2](http://p3rl.com/Dancer-Template-Ctpp2)
+* [Haml](http://p3rl.com/Dancer-Template-Haml)
+* [HtmlTemplate](http://p3rl.com/Dancer-Template-HtmlTemplate)
+* [Mason](http://p3rl.com/Dancer-Template-Mason)
+* [Mason2](http://p3rl.com/Dancer-Template-Mason2)
+* [MicroTemplate](http://p3rl.com/Dancer-Template-MicroTemplate)
+* [MojoTemplate](http://p3rl.com/Dancer-Template-MojoTemplate)
+* [Semantic](http://p3rl.com/Dancer-Template-Semantic)
+* [Simple](http://p3rl.com/Dancer-Template-Simple)
+* [TemplateFlute](http://p3rl.com/Dancer-Template-TemplateFlute)
+* [TemplateSandbox](http://p3rl.com/Dancer-Template-TemplateSandbox)
+* [TemplateToolkit](http://p3rl.com/Dancer-Template-TemplateToolkit)
+
+# More Template Choices
+
+* [Tenjin](http://p3rl.com/Dancer-Template-Tenjin)
+* [Tiny](http://p3rl.com/Dancer-Template-Tiny)
+* [Xslate](http://p3rl.com/Dancer-Template-Xslate)
+* [TemplateDeclare](http://p3rl.com/Dancer-Template-TemplateDeclare)
+* [Caribou](http://p3rl.com/Dancer-Template-Caribou)
+
+# AJAX
+
+## Serializers FTW!
+
+``` perl
+set serializer => 'JSON';
+
+get '/webpage' => sub {
+    return "totally normal webpage";
+};
+
+get '/ajaxy' => sub {
+    my $struct = {
+        name         => 'Sammy',
+        seals_broken => [ 3, 6, 66 ],
+    };
+
+    return $struct;
+};
+
+# PUT "{ name: 'Dean' }"
+put '/ajaxy' => sub {
+    my $name = request->body->{name};
+
+    return "Hi $name";
+};
+```
+
+# More easy
+
+``` perl
+set serializer => 'Mutable';
+
+get '/ajaxy' => sub {
+    my $struct = {
+        name         => 'Sammy',
+        seals_broken => [ 3, 6, 66 ],
+    };
+
+    return $struct;
+};
+
+# PUT "{ name: 'Dean' }"
+put '/ajaxy' => sub {
+    my $name = request->body->{name};
+
+    return "Hi $name";
+};
+```
+
+# MOAR EASY!
+
+``` perl
+use Dancer::Plugin::REST;
+
+prepare_serializer_for_format;
+
+resource '/ajaxy' => 
+    get    => sub { ... },
+    create => sub { ... },
+    delete => sub { ... },
+    update => sub { ... };
+```
+
+## Defines the following routes
+
+* GET /ajaxy/:id
+* GET /ajaxy/:id.:format
+* POST /ajaxy
+* POST /ajaxy.:format
+* DELETE /ajaxy/:id
+* DELETE /ajaxy/:id.:format
+* PUT /ajaxy/:id
+* PUT /ajaxy/:id.:format
+
+# Helper functions too
+
+``` perl
+resource '/user' => 
+    get => sub {
+        my $user = find_user( param('id') )
+            or returns status_not_found( "all sad :-(" );
+
+        return status_ok({
+            name => $user->name,
+            age  => $user->age,
+        });
+    };
+```
+
+# Plugins
+
+Dancer::Plugin::*
+
+* [SMS ](http://p3rl.com/Dancer-Plugin-SMS )
+* [FormattedOutput ](http://p3rl.com/Dancer-Plugin-FormattedOutput )
+* [XML-RSS ](http://p3rl.com/Dancer-Plugin-XML-RSS )
+* [Thumbnail ](http://p3rl.com/Dancer-Plugin-Thumbnail )
+* [NYTProf ](http://p3rl.com/Dancer-Plugin-NYTProf )
+* [Cache-CHI ](http://p3rl.com/Dancer-Plugin-Cache-CHI )
+* [Memcached ](http://p3rl.com/Dancer-Plugin-Memcached )
+* [Email ](http://p3rl.com/Dancer-Plugin-Email )
+* [MobileDevice ](http://p3rl.com/Dancer-Plugin-MobileDevice )
+* [FlashMessage ](http://p3rl.com/Dancer-Plugin-FlashMessage )
+* [Params-Normalization ](http://p3rl.com/Dancer-Plugin-Params-Normalization )
+* [Auth-RBAC ](http://p3rl.com/Dancer-Plugin-Auth-RBAC )
+* [Captcha-SecurityImage ](http://p3rl.com/Dancer-Plugin-Captcha-SecurityImage )
+* [Mongo ](http://p3rl.com/Dancer-Plugin-Mongo )
+
+# More Plugins
+
+* [ORMesque ](http://p3rl.com/Dancer-Plugin-ORMesque )
+* [Authorize ](http://p3rl.com/Dancer-Plugin-Authorize )
+* [REST ](http://p3rl.com/Dancer-Plugin-REST )
+* [Fake-Response ](http://p3rl.com/Dancer-Plugin-Fake-Response )
+* [Auth-Twitter ](http://p3rl.com/Dancer-Plugin-Auth-Twitter )
+* [DebugDump ](http://p3rl.com/Dancer-Plugin-DebugDump )
+* [GearmanXS ](http://p3rl.com/Dancer-Plugin-GearmanXS )
+* [ValidationClass ](http://p3rl.com/Dancer-Plugin-ValidationClass )
+* [MPD](http://p3rl.com/Dancer-Plugin-MPD)
+* [Scoped ](http://p3rl.com/Dancer-Plugin-Scoped )
+* [DataFu ](http://p3rl.com/Dancer-Plugin-DataFu )
+* [Feed ](http://p3rl.com/Dancer-Plugin-Feed )
+* [Auth-RBAC-Credentials-DBIC ](http://p3rl.com/Dancer-Plugin-Auth-RBAC-Credentials-DBIC )
+* [EscapeHTML ](http://p3rl.com/Dancer-Plugin-EscapeHTML )
+
+# Even More Plugins
+
+* [Browser ](http://p3rl.com/Dancer-Plugin-Browser )
+* [Cache ](http://p3rl.com/Dancer-Plugin-Cache )
+* [Async ](http://p3rl.com/Dancer-Plugin-Async )
+* [DebugToolbar ](http://p3rl.com/Dancer-Plugin-DebugToolbar )
+* [WebSocket ](http://p3rl.com/Dancer-Plugin-WebSocket )
+* [SiteMap ](http://p3rl.com/Dancer-Plugin-SiteMap )
+* [Bcrypt ](http://p3rl.com/Dancer-Plugin-Bcrypt )
+* [Facebook ](http://p3rl.com/Dancer-Plugin-Facebook )
+* [FormValidator ](http://p3rl.com/Dancer-Plugin-FormValidator )
+* [SporeDefinitionControl ](http://p3rl.com/Dancer-Plugin-SporeDefinitionControl )
+* [Redis ](http://p3rl.com/Dancer-Plugin-Redis )
+* [Database ](http://p3rl.com/Dancer-Plugin-Database )
+* [SimpleCRUD ](http://p3rl.com/Dancer-Plugin-SimpleCRUD )
+* [MemcachedFast ](http://p3rl.com/Dancer-Plugin-MemcachedFast )
+* [TimeRequests ](http://p3rl.com/Dancer-Plugin-TimeRequests )
+
+
+# Last of the Plugins (for now)
+
+* [ProxyPath ](http://p3rl.com/Dancer-Plugin-ProxyPath )
+* [Progress ](http://p3rl.com/Dancer-Plugin-Progress )
+* [DBIC ](http://p3rl.com/Dancer-Plugin-DBIC )
+* [FlashNote](http://p3rl.com/Dancer-Plugin-FlashNote)
+
+# Typical Use
+
+config file:
+
+``` c
+plugins:
+    'Cache::CHI':
+        driver: Memory
+        global: 1
+        expires_in: 3600
+```
+
+in the code:
+
+``` perl
+use Dancer::Plugin::Cache::CHI
+
+get '/expensive/action' => sub {
+    # lots of processing-intensive stuff
+
+    cache_page template 'expensive';
+}
+```
+    
+    
+# Hooks
+
+``` perl
+use Dancer::Plugin::MobileDevice;
+
+get '/' => sub {
+    set layout => 'mobile' if is_mobile_device;
+
+    ...
+};
+```
+
+# Do It Once
+
+``` perl
+hook before => sub {
+    set layout => 'mobile' if is_mobile_device;
+};
+```
+
+# We have... a few of them
+
+* before_deserializer
+* before_file_render
+* before_error_init
+* before_error_render
+* before
+* before_template_render
+* before_layout_render
+* before_serialization
+* after_deserializer
+* after_file_render
+* after_template_render
+* after_layout_render
+* after
+* after_error_render
+
+# Testing
+
+``` perl
+use Test::More tests => 3;
+use strict;
+use warnings;
+
+use mww;
+use Dancer::Test;
+
+route_exists [GET => '/'];
+response_status_is ['GET' => '/'], 200;
+
+response_content_like [ 'GET' => '/timestamp' ], 
+    qr/stardate \d{16}/;
+```
+
+
+# Thank You!
+
+<div class="vcenter">
+
+<h2 align="center">Questions?</h2>
+
+</div>
+
+# PSGI
+
+[Perl Web Server Gateway Interface Specification](https://github.com/miyagawa/psgi-specs)
+
+Inspired by Ruby's Rack and Python's WSGI.
+
+    # syntax: perl
+    my $app = sub {
+        my $env = shift;
+        return [
+            '200',
+            [ 'Content-Type' => 'text/plain' ],
+            [ "Hello World" ], # or IO::Handle-like object
+        ];
+    };
+
+# [Plack](http://plackperl.org/)
+
+PSGI toolkit and middleware.
+
+

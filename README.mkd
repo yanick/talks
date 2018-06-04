@@ -11,5 +11,11 @@ The slides are licensed under [CC-BY](https://github.com/yanick/talks/tree/maste
 
 ### InfluxDB - Ottawa Big Data, January 2017
 
-[slides](https://yanick.github.io/talks/influxdb/static) /
+[slides](https://yanick.github.io/talks/influxdb/static/index.html) /
 [source](https://github.com/yanick/talks/tree/master/influxdb) 
+
+### Dancer - Halifax, 2013
+
+[slides](https://yanick.github.io/talks/halifax-dancer/static/index.html) /
+[source](https://github.com/yanick/talks/tree/master/halifax-dancer) 
+[video](https://www.youtube.com/watch?v=RktRIqSAkWs)
