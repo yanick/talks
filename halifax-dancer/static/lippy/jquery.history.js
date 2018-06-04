@@ -105,9 +105,5 @@
         }
     };
 
-    if($.browser.msie && ($.browser.version < 8 || document.documentMode < 8)) {
-        $.extend(_, IframeImpl);
-    } else {
-        $.extend(_, SimpleImpl);
-    }
+    $.extend(_, SimpleImpl);
 })(jQuery);
