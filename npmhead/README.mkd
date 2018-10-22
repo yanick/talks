@@ -1,0 +1,12 @@
+
+## To Run Locally
+
+    $ npm install reveal-md
+
+    $ reveal-md --watch --disable-auto-open --preprocessor groom.js --css style.css tpm-2018-10.md
+
+## To Create a Static Version
+
+    $ reveal-md  --preprocessor groom.js --css style.css --static static --static-dirs public/ tpm-2018-10.md
+
+

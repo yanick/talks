@@ -1,0 +1,59 @@
+graph TD;
+
+AotDS(AotDS) -- for this diagram --> mermaid 
+AotDS(AotDS) -- slides --> reveal-md 
+AotDS -- js package mngt --> pnpm 
+AotDS --> babel 
+AotDS -->|task runner| gotask 
+
+AotDS -->|documentation| esdoc
+
+AotDS -->|sanity saver| lodash
+
+AotDS -->|game server| aotds-server 
+
+aotds-server(aotds-server) -->|game engine| aotds-battle
+aotds-server -->|UI| aotds-app 
+aotds-server -->|updates| websockets
+
+aotds-app(aotds-app) --> webpack
+
+koa -->|auth| jwt 
+
+webpack --> react 
+react -->|tests| storybook
+react -->|UI library| blueprintjs
+react --> redux 
+redux --> updeep
+
+react -->|battle map| SVG 
+aotds-app -->|style| postcss
+
+aotds-battle(aotds-battle) -->|game state| redux 
+aotds-battle -->|actions and states| json-schema 
+
+aotds-battle -->|testing| jest
+
+json-schema -->|purty viewing| docson 
+
+aotds-server -->|db interaction| objection 
+aotds-server -->|db interaction| LocalStorage 
+objection -->|db migrations| knex 
+knex -->|fast, easy, cheap| SQLite 
+
+aotds-server --> koa 
+koa -->|api definition| swagger
+
+class AotDS,aotds-battle,aotds-app,aotds-server aotds;
+classDef aotds fill:teal
+
+click objection "https://vincit.github.io/objection.js/"
+click koa "https://koajs.com/"
+click react "https://reactjs.org/"
+click lodash "https://lodash.com/"
+click gotask "https://github.com/go-task/task"
+click json-schema "http://json-schema.org/"
+click mermaid "https://mermaidjs.github.io"
+click pnpm "https://pnpm.js.org/"
+click babel "https://babeljs.io/"
+
