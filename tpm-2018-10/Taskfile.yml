@@ -1,9 +1,16 @@
 version: 2
 
 vars:
-    slides: tpm-2018-10.md
+    slides: tpm-2018-10.md 
+    url: https://yanick.github.io/talks/npmhead
+    featured_slide: 0
 
 tasks:
+    static:
+        cmds:
+            - reveal-md --absolute-url {{.url}} --featured-slide {{.featured_slide}} --static  static --static-dirs=public/ --scripts ./footer.js --preprocessor groom.js --css style.css {{ .slides }}
+
+
     toc:
         sources: [ ./tpm-2018-10.md ]
         cmds:
