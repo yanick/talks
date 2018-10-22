@@ -1,0 +1,33 @@
+.reveal code {
+    font-family: "courier";
+}
+
+figure.title {
+    float: right;
+} 
+
+figcaption {
+    font-size: 60% !important;
+    font-style: italic !important;
+}
+
+section#title p {
+    font-size: 70% !important;    
+}
+    
+p.leftie {
+   text-align: left; 
+} 
+
+.logo {
+  width: 1em;  
+  vertical-align: center;
+  fill: white;
+} 
+
+footer {
+  position:absolute;
+  bottom: 0%;
+  right: 15%;
+  font-size: 14pt !important;
+}

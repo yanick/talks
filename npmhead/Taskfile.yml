@@ -1,0 +1,49 @@
+version: 2
+
+vars:
+    slides: tpm-2018-10.md 
+    url: https://yanick.github.io/talks/npmhead
+    featured_slide: 0
+
+tasks:
+    static:
+        cmds:
+            - reveal-md --absolute-url {{.url}} --featured-slide {{.featured_slide}} --static  static --static-dirs=public/ --scripts ./footer.js --preprocessor groom.js --css style.css {{ .slides }}
+
+
+    toc:
+        sources: [ ./tpm-2018-10.md ]
+        cmds:
+            - perl -nE'say "\t" x length $1, $2 if /<!-- (#+)(.*) -->/' tpm-2018-10.md 
+
+    showtime:
+        desc: SHOWTIME BABY!
+        cmds:
+            - reveal-md --scripts ./footer.js --watch --preprocessor groom.js --css style.css {{ .slides }}
+
+    graphs:
+        desc: turn mermaid graphs into svgs
+        deps: 
+            - task: graph 
+              vars: { graph: stack.mmd }
+            - task: graph 
+              vars: { graph: perl.mmd }
+            - task: graph 
+              vars: { graph: js.mmd }
+            - task: graph 
+              vars: { graph: babel.mmd }
+            - task: graph 
+              vars: { graph: koa-flow.mmd }
+            - task: graph 
+              vars: { graph: middleware.mmd }
+
+    graph:
+        desc: turn a mermaid graph into svg 
+        vars:
+            dest: public/{{ .graph | replace "mmd" "svg" }}
+        sources: 
+            - graphs/{{.graph}}
+        generates:
+            - "{{.dest}}"
+        cmds:
+            - mmdc -i graphs/{{ .graph }} -t dark -o {{ .dest }}
