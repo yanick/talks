@@ -1,0 +1,21 @@
+{
+  "name": "tpm-2018-10",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Yanick Champoux <yanick@babyl.ca> (http://techblog.babyl.ca)",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^4.1.0",
+    "glob-fs": "^0.1.7",
+    "mermaid": "^8.0.0-rc.8",
+    "mermaid.cli": "^0.5.1",
+    "reveal-md": "^2.3.0",
+    "reveal.js": "^3.7.0",
+    "runjs": "^4.3.2"
+  }
+}
