@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant App
+    participant Middleware
+    participant Reducer
+    participant State
+    Note right of State: initial_state
+    App ->> Middleware: action
+    Note over Middleware: random stuff might happen here
+    activate Middleware
+    Middleware ->> Reducer: action
+    deactivate Middleware
+    activate Reducer
+    State ->> Reducer: initial_state
+    Reducer ->> State: new_state
+    deactivate Reducer
+    Note right of State: new_state

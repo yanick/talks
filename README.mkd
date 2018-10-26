@@ -1,5 +1,10 @@
 # Yanick's Talks
 
+### New JavaScript experiences for the jaded Perler - Toronto Perl Mongers, October 2018
+
+[slides](https://yanick.github.io/talks/npmhead/static) /
+[source](https://github.com/yanick/talks/tree/master/npmhead) 
+
 ### Taskwarrior - Toronto Perl Mongers, February 2018
 
 [video](https://youtu.be/FrCES7Zo9h4) /
