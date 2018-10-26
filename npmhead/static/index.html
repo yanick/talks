@@ -1,0 +1,1386 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>New JavaScript experiences for the jaded Perler</title>
+          <meta property="og:title" content="New JavaScript experiences for the jaded Perler">
+          <meta property="og:type" content="website">
+          <meta property="og:image" content="https://yanick.github.io/talks/npmhead/featured-slide.jpg">
+          <meta property="og:url" content="https://yanick.github.io/talks/npmhead">
+        <link rel="stylesheet" href="./css/reveal.css">
+        <link rel="stylesheet" href="./css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="./css/highlight/zenburn.css">
+        <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print">
+          <link rel="stylesheet" href="./assets/style.css">
+
+
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides"><section  data-markdown><script type="text/template">
+
+<footer>
+<object 
+	class="logo"
+	data="./public/github.svg" type="image/svg+xml">
+</object> [yanick](https://github.com/yanick) <object 
+	class="logo"
+	data="./public/twitter.svg" type="image/svg+xml">
+</object> [yenzie](https://twitter.com/yenzie)
+</footer>
+
+<!-- .slide: id="title" -->
+
+<figure class="title">
+![pinhead](./public/pinhead.jpg)
+<figcaption>I have such sights to show you...</figcaption>
+</figure>
+
+<h3><a href="https://yanick.github.io/talks/npmhead/static/">New JavaScript experiences for the jaded Perler </a></h3>
+
+
+
+Yanick Champoux 
+
+<object 
+	class="logo"
+	data="./public/github.svg" type="image/svg+xml">
+</object> [yanick](https://github.com/yanick) <object 
+	class="logo"
+	data="./public/twitter.svg" type="image/svg+xml">
+</object> [yenzie](https://twitter.com/yenzie)
+
+for Toronto.pm, October 25th, 2018
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+https://yanick.github.io/talks/npmhead/static/
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+# I was bored 
+
+*uh oh*
+
+</script></section><section data-markdown><script type="text/template">
+
+## and wanted to learn bleeding edge JavaScript 
+
+*uh oh intensifies*
+
+</script></section><section data-markdown><script type="text/template">
+
+## Let's implement a game! 
+
+<figure style="float: left">
+![Full Thrust](./public/full_thrust.jpg)
+</figure>
+
+[Full Thrust](https://en.wikipedia.org/wiki/Full_Thrust)
+
+kinda like
+
+Battletech & Warhammer 4K
+
+but in *spaaaaaaace*
+
+</script></section><section data-markdown><script type="text/template">
+
+## A year passes...
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+<object data="./public/stack.svg" type="image/svg+xml"></object>
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+### At the end of this talk, you'll
+
+* be flabbergasted & midly dizzy 
+* have been name-dropped enough JS libraries to leave bruises
+* learn of the existence of some Perl counter-parts 
+* hopefully be left with a newfound morbid hunger to know more 
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Four parts 
+
+* general tooling
+* game engine 
+* RESTish service 
+* Web UI
+
+</script></section><section  data-markdown><script type="text/template">
+
+# part I: The trimmings 
+
+<!-- # trimmings -->
+
+<!-- .slide: data-background-image="./public/trimmings.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## Slides
+
+<!-- ## slides -->
+
+
+* [Reveal.js](https://revealjs.com/) - looks pretty! But have to write HTML page
+* [App::Chorus](https://www.metacpan.org/pod/App::Chorus) - write in Markdown! Some websocket support
+* [reveal-md](http://webpro.github.io/reveal-md) - ditto, but not for me to maintain! \o/
+
+<aside class="notes"><ul>
+<li>Reveal let you write in Markdown \o/ ... but inside a web page. Blergh.</li>
+<li>App::Chorus massage Markdown into the webpage format + add websockets </li>
+<li>reveal-md does the same, but better.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+
+
+
+	## The trimmings 
+
+	![Turkey with all the trimmings](./public/turkey.jpg)
+
+	## Slides
+
+	* [Reveal.js](https://revealjs.com/)
+	* [App::Chorus](https://www.metacpan.org/pod/App::Chorus)
+	* [reveal-md](http://webpro.github.io/reveal-md)
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+invocation
+
+```bash
+$ reveal-md --watch --preprocessor groom.js \
+			--css style.css tpm.md 
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+`groom.js`
+
+```js 
+
+const metacpan = text =>
+  text.replace(
+	/cpan:\/\//g, 
+	"https://www.metacpan.org/pod/" 
+);
+
+module.exports = async ( markdown, options ) => {
+	return metacpan( markdown );
+}
+```
+
+	
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Diagrams 
+
+<!-- .slide: data-background-image="./public/murder.jpg" -->
+<!-- .slide: data-background-opacity="0.15" -->
+
+<!-- ## diagrams -->
+
+* [Graph::Easy](https://www.metacpan.org/pod/Graph::Easy)
+* [mermaid](https://mermaidjs.github.io/) ( + mermaid.cli )
+
+flowcharts, sequences, Gantt, classes, git 
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```
+graph TD;
+
+AotDS(AotDS) --> mermaid 
+AotDS(AotDS) -- slides --> reveal-md 
+
+AotDS -->|game server| aotds-server 
+
+aotds-server(aotds-server) -->|game engine| aotds-battle
+aotds-server -->|UI| aotds-app
+aotds-server -->|db interaction| objection 
+
+...
+```
+
+
+</script></section><section data-markdown><script type="text/template">
+
+## :-(
+
+mermaid.cli uses [puppeteer](https://www.npmjs.com/package/puppeteer) and chromium, which is heavy.
+
+
+<aside class="notes"><p>Note: mermaid for within the webpage.</p>
+<p>Note: mermaid.cli use puppeteer/chromium to generate the output. Not lightweight.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+
+## Task runner 
+
+
+<!-- ## task runner -->
+
+<!-- .slide: data-background-image="./public/mangler.jpg" -->
+<!-- .slide: data-background-size="400px" -->
+<!-- .slide: data-background-position="right 20px" -->
+<!-- .slide: data-background-opacity="0.35" -->
+
+* Makefile
+* scripts in `package.json`
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js 
+  "scripts": {
+	"test": "jest src/",
+	"build": "npm run test && npm run doc && npm ..."
+  },
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+* [Grunt](https://www.npmjs.com/package/grunt)
+* [Gulp](https://www.npmjs.com/package/gulp) ([Pulp](http://techblog.babyl.ca/entry/pulp-fiction))
+* [runjs](https://www.npmjs.com/package/runjs)
+	* very basic, no watch or file globbing 
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```
+const { run } = require('runjs');
+
+const config = {
+	markdown_file: './tpm-2018-10.md'
+};
+
+
+function showtime () {
+	run( `reveal-md ... ${ config.markdown_file }` );  
+}
+
+
+module.exports = { showtime };
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```bash 
+$ run showtime
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+so at the end, I went with... [go-task](https://github.com/go-task/task)
+
+<img src="./public/lul_wut.jpg" width="200" />
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```yml
+version: 2
+
+vars:
+  slides: tpm-2018-10.md
+
+tasks:
+  showtime:
+	desc: SHOWTIME BABY!
+	cmds:
+	  - reveal-md ... {{ .slides }}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+## no foreach loop :-(
+
+```yaml
+graphs:
+	desc: turn mermaid graphs into svgs
+	deps: 
+		- task: graph 
+		  vars: { graph: stack.mmd }
+		- task: graph 
+		  vars: { graph: other.mmd }
+
+```
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## package manager 
+
+<!-- .slide: data-background-image="./public/box.jpg" -->
+<!-- .slide: data-background-position="right 20px" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-size="600px" -->
+
+<!-- ## package manager -->
+
+* cpan, cpanplus, cpanm
+* npm
+* yarn
+* [pnpm](https://github.com/pnpm/pnpm)
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## Babel 
+
+
+<!-- ## babel -->
+
+<!-- .slide: data-background-image="./public/babel.jpg" -->
+<!-- .slide: data-background-opacity="0.35" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+<div class="height: 400px; width: 200px;">
+![perl](./public/perl.svg)
+</div>
+
+[Keyword::Simple](https://www.metacpan.org/pod/Keyword::Simple), Filter::*
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+![js](./public/js.svg)
+
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+<object data="./public/babel.svg" type="image/svg+xml"></object>
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+think of it as [Dist::Zilla](https://www.metacpan.org/pod/Dist::Zilla) for JS code
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+`.babelrc`
+
+```js 
+{
+  "plugins": [ 
+	["@babel/plugin-proposal-pipeline-operator", 
+	  { "proposal": "minimal" } 
+	],
+	[ "module-resolver", { "alias": { "~": "./src" } } ],
+  'transform-decorators-legacy',
+  ],
+  "presets":[
+	[ "env", { "targets": { "node": "current" } } ], 
+	"stage-1", 
+	"stage-0" 
+  ]
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```bash 
+$ babel src/* -o lib/
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Webpack 
+
+
+<!-- ## webpack -->
+
+[App::FatPacker](https://www.metacpan.org/pod/App::FatPacker)
+
+<!-- .slide: data-background-image="./public/harkonnen.jpg" -->
+<!-- .slide: data-background-opacity="0.35" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js
+const webpack = require('webpack');
+
+module.exports = {
+  entry: [ 
+	'babel-polyfill', 
+	'react-hot-loader/patch',
+	'./src/index.jsx' 
+  ],
+  output: {
+	path: './dist',
+	publicPath: '/',
+	filename: 'bundle.js'
+  }
+}  
+```
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## part II: Game Engine 
+
+
+<!-- # part II: game engine -->
+
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## [lodash](https://www.npmjs.com/package/lodash)
+
+
+<!-- ## lodash -->
+
+> You can write JavaScript without LoDash the same way you can eat your meal without cutlery.
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+[List::Util](https://www.metacpan.org/pod/List::Util), [List::MoreUtils](https://www.metacpan.org/pod/List::MoreUtils), [Scalar::Util](https://www.metacpan.org/pod/Scalar::Util), [Ref::Util](https://www.metacpan.org/pod/Ref::Util) all
+rolled into one.
+
+&nbsp;
+
+functional programming interface via `lodash/fp` -- like [Ramda](https://ramdajs.com/) minus the pretentiousness.
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## [debug](https://www.npmjs.com/package/debug)
+
+<!-- ## debug -->
+
+
+<!-- .slide: data-background-image="./public/bug.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-size="400px" -->
+<!-- .slide: data-background-position="right" -->
+
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js 
+const debug = require('debug')('aotds:engine');
+
+...
+
+debug( "what the? %o", my_object );
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```bash 
+$ DEBUG="aotds:*,-aotds:else" node scripts.js
+```
+
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## [Redux](https://redux.js.org/)
+
+<!-- .slide: data-background-image="./public/gate.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-position="right" -->
+
+<!-- ## redux -->
+
+([Pollux](https://www.metacpan.org/pod/Pollux))
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+* state described by store, a plain data structure 
+* actions + old state = new state 
+* reducing is pure function (no side-effects, no randomness)
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js
+{ ships: [ 
+	{ id: 'enkidu', status: { destroyed: false } },
+	{ id: 'siduri', status: { destroyed: false } },
+]}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js 
+{ type: 'EXPLOSION', ship_id: 'enkidu' }
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js
+{ ships: [ 
+	{ id: 'enkidu', status: { destroyed: true } },
+	{ id: 'siduri', status: { destroyed: false } },
+]}
+```
+
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+* can flash-freeze current state 
+* list of actions, list of states, you have the world
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+<object data="./public/middleware.svg" type="image/svg+xml"></object>
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+[Redux Saga](https://github.com/redux-saga/redux-saga)
+
+<!-- ## redux saga -->
+
+
+<!-- .slide: data-background-image="./public/slaine.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-size="600px" -->
+<!-- .slide: data-background-position="right" -->
+
+* middleware framework 
+* helps with juggling of async actions
+* helps with testing 
+* doesn't work with immutable actions :-(
+
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## [updeep](https://www.npmjs.com/package/updeep)
+
+<!-- .slide: data-background-image="./public/updeep.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-position="right" -->
+<!-- .slide: data-background-size="400px" -->
+
+
+<!-- ## updeep -->
+
+Immutable-friendly deep merging library.
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js
+store.ships = store.ships.map( 
+	ship => ship.id == 'enkidu' 
+		? fp.merge({ status: { destroyed: true } } )(ship)
+		: ship
+);
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js 
+
+const is_right_ship = fp.has({ id: 'Enkidu' });
+const it_is_a_goner = { status: { destroyed: true } };
+
+store = u({
+	ships: u.map(
+		u.if( is_right_ship, it_is_a_goner )
+	)
+}, store );
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## schema description 
+
+<!-- .slide: data-background-image="./public/friday.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-position="right" -->
+
+
+<!-- ## json schema -->
+
+to document and validate
+
+* [typescript](https://www.typescriptlang.org/)
+* [flow](https://flow.org/)
+* [json schema](https://json-schema.org/)
+
+</script></section><section data-markdown><script type="text/template">
+
+## JSON schema 
+
+* not at compile-time like TypeScript and Flow
+* Swagger types is a subset of JSON Schemas
+* typing can refer to values in the structure itself 
+
+```js 
+{
+  engine: {
+	 max_thrust: 4,
+	 thrust: 2,
+  }
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js
+navigation = {
+  "type": "object",
+  "properties": {
+	"thrust": { "type": "number" },
+	"turn": { "type": "number" },
+	"bank": { "type": "number" }
+  }
+};
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+## boilerplate schmoilerplate
+
+[json-schema-shorthand](https://github.com/yanick/json-schema-shorthand)
+
+```js 
+navigation: object({
+  thrust: number(),
+  turn:   number(),
+  bank:   number(),
+}),
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## JSON Schema visualization 
+
+* [docson](https://github.com/lbovet/docson)
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+![](./public/docson.png)
+
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## testing 
+
+
+<!-- ## testing -->
+
+TAP, [Test::More](https://www.metacpan.org/pod/Test::More), [Test::Most](https://www.metacpan.org/pod/Test::Most)
+
+[TAPE](https://www.npmjs.com/package/tape)
+
+
+[mocha](https://www.npmjs.com/package/mocha) + [chai](https://www.npmjs.com/package/chai)
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+<!-- .slide: data-background-image="./public/lotion.png" -->
+<!-- .slide: data-background-position="right" -->
+<!-- .slide: data-background-size="200px" -->
+
+```js
+it( 'rubs the lotion', () => {
+	expect( this.hose() ).toBeTrue();
+});
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+## [jest](https://www.npmjs.com/package/jest)
+
+<!-- .slide: data-background-image="./public/joker.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-size="800px" -->
+<!-- .slide: data-background-position="right" -->
+
+* test framework, cli, expect stuff bundled together
+* can watch files for changes, do coverage, run tests for touched files
+* can use `test` instead of `it`
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## documentation 
+
+
+<!-- ## docs -->
+
+> the 90s called, they want their READMEs back 
+
+<!-- .slide: data-background-image="./public/cavemen.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+[jsdoc](https://github.com/jsdoc3/jsdoc), [esdoc](https://esdoc.org/), [gitbook](https://www.gitbook.com)
+
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## part III: RESTish service 
+
+
+<!-- # part III: RESTish service -->
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+
+
+service definition 
+
+
+<!-- ## swagger -->
+
+[Swagger](https://swagger.io/)
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```yaml
+/battle/{battle_id}/ship/{ship_id}/orders:
+	post:
+		parameters:
+			- name: battle_id
+			  in: path
+			  type: string
+			  required: true
+			- name: ship_id
+			  in: path
+			  type: string
+			  required: true
+		description: dispatch orders to ship
+		responses:
+			200:
+				description: orders sent to ship
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+![](./public/swagger_ui.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+[Dancer2::Plugin::Swagger2](https://www.metacpan.org/pod/Dancer2::Plugin::Swagger2), [Dancer2::Plugin::OpenAPIRoutes](https://www.metacpan.org/pod/Dancer2::Plugin::OpenAPIRoutes)
+
+[Dancer::Plugin::Swagger](https://www.metacpan.org/pod/Dancer::Plugin::Swagger)
+
+[koa-oai-router-middleware](https://www.npmjs.com/package/koa-oai-router-middleware)
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## web app framework 
+
+<!-- ## koa -->
+
+* [Dancer2](https://www.metacpan.org/pod/Dancer2), [Mojolicious](https://www.metacpan.org/pod/Mojolicious), [Catalyst](https://www.metacpan.org/pod/Catalyst)
+* [express](https://www.npmjs.com/package/express)
+* [koa](https://www.npmjs.com/package/koa)
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+errything is middleware 
+
+<!-- .slide: data-background-image="./public/all-the-things.png" -->
+<!-- .slide: data-background-opacity="0.25" -->
+
+<object data="./public/koa-flow.svg" type="image/svg+xml"></object>
+
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js
+export const post_orders = async(ctx,next) => {
+	let { battle_id, ship_id } = ctx.params;
+	let orders = ctx.request.body;
+
+	let battle = await retrieve_battle(ctx,battle_id);
+	battle.dispatch_action( 'set_orders', ship_id, orders );
+
+	ctx.body = battle.state 
+			|> fp.get( 'bogeys' )
+			|> fp.find({ id: ship_id });
+
+	_play_turn( battle );
+
+	await next();
+};
+```
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## Swagger route definition 
+
+<!-- ## swagger route definition -->
+
+thank you, `koa-oai-router-middleware`
+
+```js 
+/battle/{battle_id}/ship/{ship_id}/orders:
+	post:
+		x-oai-controller:
+			- file: battle
+			  handler: post_orders 
+```
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## authorization
+
+<!-- ## auth -->
+
+* [jwt](https://jwt.io/) 
+* [koa-jwt](https://www.npmjs.com/package/koa-jwt)
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```
+{
+  "player_id": "yenzie",
+  "is_admin": true,
+}
+```
+
+<aside class="notes"><p>Can be used for cli-based interfaces</p>
+</aside></script></section><section data-markdown><script type="text/template">
+
+
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJwbGF5ZXJfaWQiOiJ5ZW56aWUiLCJpYXQiOjE1Mzk5ODk4MjV9.
+gyxrI1wtAypbkGc2UK34rHAcyhUe1fArPhMqp5QNXtQ
+```
+
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```
+header  eyJhbG...
+payload  eyJwbG...
+signature gyxrI1...
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## [websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+
+[ws](https://www.npmjs.com/package/ws)
+
+<!-- websockets -->
+
+<!-- .slide: data-background-image="./public/shocker.jpg" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-size="400px" -->
+<!-- .slide: data-background-position="right" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js
+import WebSocket from 'ws';
+
+class WSServer {
+
+	constructor({ port }) {
+		this.ws = new WebSocket.Server({ port });
+		this.ws.on('connection', this.new_connection );
+	}
+
+	new_connection = ws => {
+		ws.on( 'message', message => {
+				ws.battle = JSON.parse(message).battle;
+		});
+	};
+
+	new_turn = battle => {
+		let message = JSON.stringify({ type: 'NEW_TURN_AVAILABLE' });
+
+		Array.from(this.ws.clients.values()).filter( c => c.battle === battle ).forEach( ws => {
+			ws.send(message)} );
+	};
+}
+```
+
+
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Database
+
+
+<!-- ## databases -->
+
+[DBI](https://www.metacpan.org/pod/DBI), [DBIx::Class](https://www.metacpan.org/pod/DBIx::Class)
+
+[knex](http://knexjs.org/), [objection](http://vincit.github.io/objection.js/)
+
+<aside class="notes"><p>Objection is very JSON-friendly</p>
+</aside></script></section><section data-markdown><script type="text/template">
+
+
+
+knex migration
+
+```js 
+exports.up = function (knex, Promise) {
+	return knex.schema.createTable('game_turns', table => {
+		table.string('name').notNullable();
+		table.integer('turn').unsigned().notNullable();
+		table.json('state').notNullable();
+		table.primary(['name','turn']);
+	})
+};
+
+exports.down = function down(knex, Promise) {
+	return knex.schema.dropTable('game_turns');
+};
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+
+```js
+import { Model } from 'objection';
+
+export default class Players extends Model {
+  static tableName = 'players';
+  static get idColumn() { return 'name'; }
+
+  static async auth( name, password ) {
+	let player = await Players.query().findById(name);
+	await bcrypt.compare(password, player.password );
+
+	return {
+	   player: name, is_admin: player.is_admin,
+	};
+  }
+}
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## actually, you know what? 
+
+<h2>screw that db stuff </h2>
+
+<!-- .slide: data-background-image="./public/flip.jpg" -->
+<!-- .slide: data-background-opacity="0.15" -->
+<!-- .slide: data-background-size="80%" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+
+```js
+import { LocalStorage } from 'node-localstorage';
+
+export default class Players {
+  constructor(path) {
+	  this.storage = new LocalStorage('./player_store');
+  }
+
+  set( player ) { 
+	this.storage.setItem( player.player_id, 
+	JSON.stringify(player) );
+  }
+
+  async auth( name, password ) {
+	let player = JSON.parse(this.storage.getItem(name));
+	(...)
+	return _.omit( player, [ 'password' ] );
+  }
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js 
+import { AsyncNodeStorage } from 'redux-persist-node-storage';
+
+const storage = new AsyncNodeStorage( './battle_store');
+
+...;
+
+reducer = persistReducer(
+  { storage, key: "Epsilon 4" }, 
+  reducer 
+);
+```
+
+
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## part IV: Web UI 
+
+<!-- # part IV: WEB UI -->
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## Templating
+
+<!-- ## react -->
+
+browser-side dynamic [Mason](https://www.metacpan.org/pod/Mason) / [Template Toolkit](https://www.metacpan.org/pod/Template::Toolkit)
+
+[vuejs](https://vuejs.org/)
+
+[react](https://reactjs.org/)
+
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+`components/CommandPanel/Navigation.jsx`
+
+```js
+export default function Navigation({ 
+	drive_rating, disabled, amend_orders, orders, maneuvers 
+}) {
+  return <FieldSet disabled={disabled} legend="navigation">
+	{ [ 'thrust', 'turn', 'bank' ].map( type => 
+		<Maneuver
+			drive_rating={ drive_rating }
+			maneuver={ type }
+			range={ _.get(maneuvers,type, [0,0])  }
+			value={ _.get(orders,type, 0)  }
+			disabled={disabled}
+		/> ) }
+	</FieldSet>
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+## too exotic?
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+[react-templates](https://wix.github.io/react-templates/)
+
+```js 
+<FieldSet disabled="{this.disabled}" legend="navigation">
+	<Maneuver rt-repeat="type in [ 'thrust', 'turn', 'bank' ]"
+		drive_rating="{ this.drive_rating }"
+		maneuver="{ type }"
+		range="{ _.get(this.maneuvers,type, [0,0])  }"
+		value="{ _.get(this.orders,type, 0)  }"
+		disabled="{this.disabled}"
+	/>
+</FieldSet>
+```
+
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## UI component toolkit 
+
+
+<!-- ## toolkits -->
+
+> Why reinvent the wheel when you can steal it from the tire factory?
+
+[blueprintjs](https://blueprintjs.com/docs/) - react, desktop-focused, good docs
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Graphics
+
+* Canvas - js interface, in-browser
+* SVG  - XML, style via css
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+### Stylin'
+
+
+<!-- ## styling -->
+
+css - the unavoidable base
+
+[sass](https://sass-lang.com/) - styling dialect of its own
+
+[postcss](https://postcss.org/) - think Babel, but for CSS
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```js
+module.exports = {
+  plugins: [
+	require('postcss-import')(),
+	require('lost'),
+	require('postcss-nesting')(),
+	require('postcss-url')(),
+  ],
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```
+@import "from/somewhere/else"
+
+.command_panel .head_section {
+	display: flex;
+	justify-content: flex-end;
+
+	& .bogey_name {
+		flex-grow: 1;
+	}
+}
+```
+
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## testing UI 
+
+
+<!-- ## testing UI -->
+
+[storybook](https://storybook.js.org/)
+
+* manual testing 
+* per-component development
+* documentation / ref guide
+
+<!-- .slide: data-background-image="./public/grimm.png" -->
+<!-- .slide: data-background-opacity="0.25" -->
+<!-- .slide: data-background-size="600px" -->
+<!-- .slide: data-background-position="right" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+![](./public/storybook.png)
+
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+# Thank you!
+
+... questions?
+
+
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+[websockets]: https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API
+[Reveal.js]: https://revealjs.com/
+[reveal-md]: http://webpro.github.io/reveal-md
+[App::Chorus]: https://www.metacpan.org/pod/App::Chorus
+[Graph::Easy]: https://www.metacpan.org/pod/Graph::Easy
+[mermaid]: https://mermaidjs.github.io/
+[puppeteer]: https://www.npmjs.com/package/puppeteer
+[runjs]: https://www.npmjs.com/package/runjs
+[Gulp]: https://www.npmjs.com/package/gulp
+[Grunt]: https://www.npmjs.com/package/grunt
+[go-task]: https://github.com/go-task/task
+[Pulp]: http://techblog.babyl.ca/entry/pulp-fiction
+[pnpm]: https://github.com/pnpm/pnpm 
+[Keyword::Simple]: https://www.metacpan.org/pod/Keyword::Simple
+[App::FatPacker]: https://www.metacpan.org/pod/App::FatPacker
+[lodash]: https://www.npmjs.com/package/lodash
+[Ramda]: https://ramdajs.com/
+[List::Util]: https://www.metacpan.org/pod/List::Util
+[List::MoreUtils]: https://www.metacpan.org/pod/List::MoreUtils
+[Scalar::Util]: https://www.metacpan.org/pod/Scalar::Util
+[Ref::Util]: https://www.metacpan.org/pod/Ref::Util
+[updeep]: https://www.npmjs.com/package/updeep
+[Swagger]: https://swagger.io/
+[Dancer2::Plugin::Swagger2]: https://www.metacpan.org/pod/Dancer2::Plugin::Swagger2
+[Dancer2::Plugin::OpenAPIRoutes]: https://www.metacpan.org/pod/Dancer2::Plugin::OpenAPIRoutes
+[Dancer::Plugin::Swagger]: https://www.metacpan.org/pod/Dancer::Plugin::Swagger
+[koa-oai-router-middleware]: https://www.npmjs.com/package/koa-oai-router-middleware
+[Dancer2]: https://www.metacpan.org/pod/Dancer2
+[express]: https://www.npmjs.com/package/express
+[koa]: https://www.npmjs.com/package/koa
+[jwt]: https://jwt.io/
+[koa-jwt]: https://www.npmjs.com/package/koa-jwt
+[Full Thrust]: https://en.wikipedia.org/wiki/Full_Thrust
+[Test::More]: https://www.metacpan.org/pod/Test::More
+[Test::Most]: https://www.metacpan.org/pod/Test::Most
+[TAPE]: https://www.npmjs.com/package/tape
+[mocha]: https://www.npmjs.com/package/mocha
+[chai]: https://www.npmjs.com/package/chai
+[jest]: https://www.npmjs.com/package/jest
+[storybook]: https://storybook.js.org/
+[postcss]: https://postcss.org/
+[sass]: https://sass-lang.com/
+[blueprintjs]: https://blueprintjs.com/docs/
+[typescript]: https://www.typescriptlang.org/
+[flow]: https://flow.org/
+[json schema]: https://json-schema.org/
+[json-schema-shorthand]: https://github.com/yanick/json-schema-shorthand
+[docson]: https://github.com/lbovet/docson
+[Dist::Zilla]: https://www.metacpan.org/pod/Dist::Zilla
+[Mojolicious]: https://www.metacpan.org/pod/Mojolicious
+[Catalyst]: https://www.metacpan.org/pod/Catalyst
+[DBI]: https://www.metacpan.org/pod/DBI
+[DBIx::Class]: https://www.metacpan.org/pod/DBIx::Class
+[knex]: http://knexjs.org/
+[objection]: http://vincit.github.io/objection.js/
+[Redux]: https://redux.js.org/
+[Redux Saga]: https://github.com/redux-saga/redux-saga
+[Pollux]: https://www.metacpan.org/pod/Pollux
+[jsdoc]: https://github.com/jsdoc3/jsdoc
+[esdoc]: https://esdoc.org/
+[gitbook]: https://www.gitbook.com 
+[react-templates]: https://wix.github.io/react-templates/
+[react]: https://reactjs.org/
+[Mason]: https://www.metacpan.org/pod/Mason
+[Template Toolkit]: https://www.metacpan.org/pod/Template::Toolkit 
+[vuejs]: https://vuejs.org/
+[ws]: https://www.npmjs.com/package/ws
+[debug]: https://www.npmjs.com/package/debug
+</script></section></div>
+        </div>
+
+        <script src="./lib/js/head.min.js"></script>
+        <script src="./js/reveal.js"></script>
+
+        <script>
+            function extend() {
+              var target = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) {
+                  if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                  }
+                }
+              }
+              return target;
+            }
+
+            // Optional libraries used to extend on reveal.js
+            var deps = [
+              { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+              { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: './plugin/zoom-js/zoom.js', async: true },
+              { src: './plugin/notes/notes.js', async: true },
+              { src: './plugin/math/math.js', async: true }
+            ];
+
+            // default options to init reveal.js
+            var defaultOptions = {
+              controls: true,
+              progress: true,
+              history: true,
+              center: true,
+              transition: 'default', // none/fade/slide/convex/concave/zoom
+              dependencies: deps
+            };
+
+            // options from URL query string
+            var queryOptions = Reveal.getQueryHash() || {};
+
+            var options = {};
+            options = extend(defaultOptions, options, queryOptions);
+        </script>
+
+          <script src="./assets/./footer.js"></script>
+
+        <script>
+          Reveal.initialize(options);
+        </script>
+    </body>
+</html>
