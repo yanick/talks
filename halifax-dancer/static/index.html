@@ -1,0 +1,1081 @@
+<html>
+<head>
+        <script type="text/javascript" src="./jquery-2.0.2.min.js"></script>
+        <script type="text/javascript" src="./lippy/jquery.history.js"></script>
+        <script type="text/javascript" src="./lippy/slippy-0.9.0.js"></script>
+
+        <!-- Slippy structural styles -->
+        <link type="text/css" rel="stylesheet" href="./lippy/slippy-0.9.0.css"/>
+        <!-- Slippy theme -->
+        <link type="text/css" rel="stylesheet" href="./lippy/slippy-pure.css"/>
+        <link type="text/css" rel="stylesheet" href="./my-style.css"/>
+
+        <script src="./SHJS-Extended/shjsx/sh_main.min.js" type="text/javascript"></script>
+        <link type="text/css" rel="stylesheet"
+        href="./SHJS-Extended/shjsx/shx_main.min.css"/>
+        <link type="text/css" rel="stylesheet" href="./SHJS-Extended/shjsx/css/sh_typical.min.css"/>
+
+<script>
+$(function(){
+    sh_highlightDocument('./SHJS-Extended/shjsx/', '.min.js');
+});
+
+</script>
+
+<style>
+#chorus_terminal .choirboy,.mc { display: none; }
+#chorus_terminal {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    border: 1pt dashed black;
+    width: 20em;
+    padding: 5px;
+}   
+#chorus_title {
+    margin-bottom: 1em;
+}
+</style>
+</head>
+
+<body>
+<div class='slide'><p><style>
+li { margin-top: 0.75em; }
+h2 { margin-top: 2em; }
+.shx-topbar { display: none}
+</style></p>
+
+<h1>So You Think You Can Dance, Halifax?</h1>
+
+<div align="center" class='vcenter'>
+<img style="heigth:90%" src="./sytycdh.jpg" />
+</div>
+
+</div><div class='slide'><h1>Who Am I?</h1>
+
+<h2>Yanick Champoux</h2>
+
+<ul>
+<li>Work at <a href="http://www.pythian.com">Pythian</a></li>
+<li>Perl hacker for 15 years</li>
+<li><a href="https://metacpan.org/author/YANICK">CPAN Author</a></li>
+<li><a href="http://techblog.babyl.ca">Blogger</a></li>
+<li>Member of the Dancer Core Crew &amp; Dancer 1 Release Steward</li>
+</ul>
+
+</div><div class='slide'><h1>How I Got Involved in Dancer: A Cautionary Tale</h1>
+
+<h2>Circa 3 years ago</h2>
+
+<ul>
+<li><p>*some noise about that new Dancer web framework*</p></li>
+<li><p>"Meh. <a href="https://metacpan.org/release/Catalyst-Runtine">Catalyst</a> is good. Me
+likes Catalyst."</p></li>
+</ul>
+
+</div><div class='slide'><h1>How I Got Involved in Dancer: Only a Taste</h1>
+
+<ul>
+<li><p>*noise doesn't die down*</p></li>
+<li><p>"Maybe I should try, just for the sake of knowing what it's like."</p></li>
+</ul>
+
+</div><div class='slide'><h1>How I Got Involved in Dancer: The Hooks Bite In</h1>
+
+<ul>
+<li><p>Go on hacking <a href="https://metacpan.org/release/Dancer-Template-Mason">Dancer::Template::Mason</a></p></li>
+<li><p>"Oh geez, is that a Dancer bug? Let's submit a patch!"</p></li>
+</ul>
+
+</div><div class='slide'><h1>How I Got Involved in Dancer: Uh Oh...</h1>
+
+<ul>
+<li>"What a bunch of nice people! Let's submit more patches!"</li>
+</ul>
+
+</div><div class='slide'><h1>How I Got Involved in Dancer: Tactical Failure</h1>
+
+<ul>
+<li><p>"So there's this guy who keep sending patches. What should we do to get rid
+of him?"</p></li>
+<li><p>"Make him part of the core team?"</p></li>
+<li><p>"Brilliant! That's a plan that can't possibly backfire!"</p></li>
+</ul>
+
+</div><div class='slide'><h1>How I Got Involved in Dancer: Dancer 1 Takeover</h1>
+
+<div align="center" class='vcenter'>
+<img src="./sad-puppy-dancer.jpg" />
+</div>
+
+<!--
+
+
+
+2594a85efd31546b4f40189e801f2d95
+
+
+
+
+
+ee1b1a3af983c6619579608f2c44c415
+
+
+-->
+
+</div><div class='slide'><h1>What the Deuce is Dancer?</h1>
+
+<div align="center" class='vcenter'>
+<img src="./dancer_logo.png" />
+</div>
+
+<ul>
+<li><p>Perl micro-web application framework</p></li>
+<li><p>Originaly based on Ruby's <a href="http://www.sinatrarb.com/">Sinatra</a></p></li>
+</ul>
+
+</div><div class='slide'><h1>Web Framework?</h1>
+
+<p>Provide the basic frame to build websites.</p>
+
+<div align="center" >
+<img src="./framework_to_final.png" style="heigth: 400px;" />
+</div>
+
+</div><div class='slide'><h1>Micro?</h1>
+
+<ul>
+<li><p>Intuitive, minimalist, expressive syntax, few dependencies, <em>fast</em></p></li>
+<li><p>Rather than all-encompassing, rigid, heavy</p></li>
+<li><p>Small != Trivial (It's going to be awesomely perfect for 95% of web apps)</p></li>
+</ul>
+
+</div><div class='slide'><h1>Awesome Features</h1>
+
+<ul>
+<li><p>Treasure trove of plugins + templates</p></li>
+<li><p>Serializing, sessions, cookies, all dealt with</p></li>
+<li><p>Hooks</p></li>
+<li><p>REST/Ajax-friendly</p></li>
+<li><p>Development-friendly (standalone server, debugging facilities)</p></li>
+</ul>
+
+</div><div class='slide'><h1>What is it (Maybe) Not Good For?</h1>
+
+<ul>
+<li><p>Project with many templating systems</p></li>
+<li><p>Project touching many teams and must have rigid MVC structure</p></li>
+<li><p>Lots of action chaining</p></li>
+<li><p>Many apps must run under the same interpreter (Dancer 2 fixes that)</p></li>
+<li><p>Project is godawfully complex with lots of eldritch magic under the hood</p></li>
+</ul>
+
+</div><div class='slide'><h1>Architecture</h1>
+
+<h2>Route Dispatcher</h2>
+
+<pre><code>GET /welcome          -&gt; send welcome web page
+PUT /user/(username)  -&gt; set user info
+...
+</code></pre>
+
+<h2>Not a MVC (out of the box)</h2>
+
+<ul>
+<li><p>Template support baked-in. (View)</p></li>
+<li><p>Model/Controller can be mashed together. Or not.</p></li>
+</ul>
+
+</div><div class='slide'><h1>Big Brothers</h1>
+
+<h2><a href="http://p3rl.org/Catalyst-Runtime">Catalyst</a></h2>
+
+<p>Insanely flexible</p>
+
+<h2><a href="http://p3rl.org/Mojolicious">Mojolicious</a></h2>
+
+<p>one-stop solution to everything (yes, everything)</p>
+
+</div><div class='slide'><h1>Can I Have the First Dance?</h1>
+
+<ul>
+<li>Markdown: cool for slides</li>
+</ul>
+
+<pre class='snippet sh-html'>
+# Can I Have the First Dance?
+
+* Markdown: cool for slides
+
+ ```html
+    # Can I Have the First Dance?
+
+    * Markdown: cool for slides
+
+    ```html
+        Present-ception!
+    ```
+
+    * Markdown-to-html web app!
+ ```
+
+* Markdown-to-html web app!
+</pre>
+
+<ul>
+<li>Markdown-to-html web app!</li>
+</ul>
+
+</div><div class='slide'><h1>First Dance</h1>
+
+<pre class='snippet sh-perl'>
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+
+</pre>
+
+</div><div class='slide'><h1>First Dance</h1>
+
+<pre class='snippet sh-perl'>
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use Text::Markdown &#39;markdown&#39;;
+
+my $webpage = markdown( join &#39;&#39;, &lt;&gt; );
+
+</pre>
+
+</div><div class='slide'><h1>First Dance</h1>
+
+<pre class='snippet sh-perl'>
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use Text::Markdown &#39;markdown&#39;;
+use Dancer &#39;:syntax&#39;;
+
+my $webpage = markdown( join &#39;&#39;, &lt;&gt; );
+
+get &#39;/&#39; =&gt; sub { $webpage };
+
+dance;
+
+</pre>
+
+</div><div class='slide'><h1>First Dance</h1>
+
+<pre class='snippet sh-sh'>
+$ perl micro_chorus.pl prez.mkd
+&gt;&gt; Dancer 1.3115 server 17163 listening on http://0.0.0.0:3000
+== Entering the development dance floor ...
+</pre>
+
+<h2>TADAH!</h2>
+
+</div><div class='slide'><h1>Thank You!</h1>
+
+<h2>Any question?</h2>
+
+<h2>(just kidding)</h2>
+
+</div><div class='slide'><h1>Slow Dancing</h1>
+
+</div><div class='slide'><h1>Step 0 - Installation</h1>
+
+<pre class='snippet sh-sh'>
+$ sudo apt-get libdancer-perl
+
+or 
+
+$ cpan Dancer
+
+or
+
+$ cpanm Dancer
+(using cpanminus - https://metacpan.org/release/App::cpanminus)
+
+or
+
+$ git clone http://github.com/perldancer/Dancer
+$ cd Dancer
+$ perl Makefile.PL &amp;&amp; make test &amp;&amp; make install
+</pre>
+
+</div><div class='slide'><h1>Step 1 - Let There Be an App!</h1>
+
+<pre class='snippet sh-'>
+$ dancer -a my_app
++ my_app
++ my_app/bin
++ my_app/bin/app.pl
++ my_app/config.yml
++ my_app/environments
++ my_app/environments/development.yml
++ my_app/environments/production.yml
++ my_app/views
++ my_app/views/index.tt
++ my_app/views/layouts
++ my_app/views/layouts/main.tt
++ my_app/MANIFEST.SKIP
++ my_app/lib
++ my_app/lib/
++ my_app/lib/mww.pm
++ my_app/public
++ my_app/public/css
++ my_app/public/css/style.css
++ my_app/public/css/error.css
++ my_app/public/images
++ my_app/public/500.html
++ my_app/public/404.html
++ my_app/public/dispatch.fcgi
++ my_app/public/dispatch.cgi
++ my_app/public/javascripts
++ my_app/public/javascripts/jquery.js
++ my_app/t
++ my_app/t/002_index_route.t
++ my_app/t/001_base.t
++ my_app/Makefile.PL
+</pre>
+
+</div><div class='slide'><h1>The App's Launching Script</h1>
+
+<h2>my_app/bin/app.pl</h2>
+
+<pre class='snippet sh-perl'>
+#!/usr/bin/env perl
+use Dancer;
+use Foo;
+dance;
+</pre>
+
+</div><div class='slide'><h1>Configuration Files</h1>
+
+<pre class='snippet sh-sh'>
++ my_app/config.yml
++ my_app/environments/development.yml
++ my_app/environments/production.yml
+</pre>
+
+<h2>config.yml</h2>
+
+<pre class='snippet sh-c'>
+    appname: &quot;Foo&quot;
+
+    layout: &quot;main&quot;
+
+    charset: &quot;UTF-8&quot;
+
+    template: &quot;simple&quot;
+
+    # template: &quot;template_toolkit&quot;
+    # engines:
+    #   template_toolkit:
+    #     start_tag: &#39;[%&#39;
+    #     end_tag:   &#39;%]&#39;
+</pre>
+
+</div><div class='slide'><h1>config environments</h1>
+
+<h2>development</h2>
+
+<pre class='snippet sh-c'>
+logger: &quot;console&quot;
+
+log: &quot;core&quot;
+
+warnings: 1
+
+show_errors: 1
+
+auto_reload: 0
+</pre>
+
+</div><div class='slide'><h1>Template files</h1>
+
+<pre class='snippet sh-sh'>
++ my_app/views
++ my_app/views/index.tt
++ my_app/views/layouts
++ my_app/views/layouts/main.tt
+</pre>
+
+<p>Typical template system: <a href="https://metacpan.org/release/Template">Template
+Toolkit</a></p>
+
+</div><div class='slide'><h1>The App Core</h1>
+
+<h2>my_app/lib/my_app.pm</h2>
+
+<pre class='snippet sh-perl'>
+package Foo;
+use Dancer &#39;:syntax&#39;;
+
+our $VERSION = &#39;0.1&#39;;
+
+get &#39;/&#39; =&gt; sub {
+    template &#39;index&#39;;
+};
+
+true;
+</pre>
+
+</div><div class='slide'><h1>Static Files</h1>
+
+<pre class='snippet sh-sh'>
++ my_app/public/css/style.css
++ my_app/public/css/error.css
++ my_app/public/images
++ my_app/public/500.html
++ my_app/public/404.html
++ my_app/public/dispatch.fcgi
++ my_app/public/dispatch.cgi
++ my_app/public/javascripts
++ my_app/public/javascripts/jquery.js
+</pre>
+
+<ul>
+<li><p>Comes with batteries included</p></li>
+<li><p>Ready for CGI and FCGI</p></li>
+</ul>
+
+</div><div class='slide'><h1>Tests</h1>
+
+<pre class='snippet sh-sh'>
++ my_app/t/001_base.t
++ my_app/t/002_index_route.t
+</pre>
+
+</div><div class='slide'><h1>Distribution Miscallenous</h1>
+
+<pre class='snippet sh-sh'>
++ my_app/MANIFEST.SKIP
++ my_app/Makefile.PL
+</pre>
+
+</div><div class='slide'><h1>Let's Dance!</h1>
+
+<pre class='snippet sh-sh'>
+$ ./bin/app.pl
+
+[3481]  core @0.000016&gt; loading Dancer::Handler::Standalone handler
+[3481]  core @0.000333&gt; loading handler &#39;Dancer::Handler::Standalone&#39;
+
+&gt;&gt; Dancer 1.3071 server 3481 listening on http://0.0.0.0:3000
+== Entering the development dance floor ...
+</pre>
+
+</div><div class='slide'><h1><img src="./basic_app.png" alt="basic application" /></h1>
+
+</div><div class='slide'><h1>Deployment</h1>
+
+<p>Run over the Plack middleware (inspired from <a href="http://en.wikipedia.org/wiki/Rack_%28web_server_interface%29">Rack</a>)</p>
+
+<p><img src="./oreo_plack.png" alt="Oreo" /></p>
+
+</div><div class='slide'><h1>Deployment modes</h1>
+
+<ul>
+<li>Single-threaded dev server</li>
+<li>Fastcgi</li>
+<li>CGI</li>
+<li>Standalone web server</li>
+<li>Static website (via <a href="https://metacpan.org/release/App-Wallflower">Wallflower</a>)</li>
+</ul>
+
+</div><div class='slide'><h1>Single-threaded test server</h1>
+
+<pre class='snippet sh-sh'>
+$ ./bin/app.pl
+</pre>
+
+</div><div class='slide'><h1>High-performance Standalone Web Server</h1>
+
+<pre class='snippet sh-sh'>
+$ plackup --server Twiggy --port 9090 --host 127.0.0.1 ./bin/app.pl
+
+$ plackup --server Starman --port 9090 --host 127.0.0.1 ./bin/app.pl
+</pre>
+
+</div><div class='slide'><h1>Fast-CGI</h1>
+
+<pre class='snippet sh-sh'>
+$ plackup -s FCGI --listen /tmp/app.fcgi ./bin/app.pl
+</pre>
+
+</div><div class='slide'><h1>CGI</h1>
+
+<pre class='snippet sh-perl'>
+    AddHandler cgi-script .cgi
+    ScriptAlias / /path/to/app/public/dispatch.cgi/
+</pre>
+
+</div><div class='slide'><h1>The Heart That Provides the Beat</h1>
+
+<pre class='snippet sh-perl'>
+package MyApp;
+
+use Dancer &#39;:syntax&#39;;
+
+our $VERSION = &#39;0.1&#39;;
+
+get &#39;/&#39; =&gt; sub {
+    template &#39;index&#39;;
+};
+
+true;
+</pre>
+
+</div><div class='slide'><h1>Routes</h1>
+
+<h2>http_verb route => what_to_do;</h2>
+
+<pre class='snippet sh-perl'>
+
+    get &#39;/&#39; =&gt; sub {
+        return &quot;hello there!&quot;;
+    };
+</pre>
+
+</div><div class='slide'><h1>Basic</h1>
+
+<p>Verbs: get, post, del, put, post</p>
+
+<pre class='snippet sh-perl'>
+get &#39;/about&#39; =&gt; sub {
+    return &#39;this is an app&#39;;
+};
+
+post &#39;/man&#39; =&gt; sub {
+    &quot;I&#39;ve been known to ring twice&quot;;
+};
+
+any [ qw/ get post put del / ] =&gt; &#39;/rome&#39; =&gt; sub {
+    &#39;You reached Rome.&#39;
+};
+</pre>
+
+</div><div class='slide'><h1>Named Captures</h1>
+
+<pre class='snippet sh-perl'>
+get &#39;/login/:name&#39; =&gt; sub { 
+    &#39;Hi &#39; . param( &#39;name&#39; );
+};
+</pre>
+
+<ul>
+<li><p>matches /login/alice</p></li>
+<li><p>but not /login/foo/bar</p></li>
+</ul>
+
+</div><div class='slide'><h1>Unnamed Captures</h1>
+
+<pre class='snippet sh-perl'>
+get &#39;/path/*/*&#39; =&gt; sub {
+    my ( $from, $to ) = splat;
+    return &quot;going from $from to $to&quot;;
+}
+</pre>
+
+<ul>
+<li><p>matches <code>/path/here/there</code></p></li>
+<li><p>but not <code>/path/here/there/anywhere</code> </p></li>
+<li><p>or <code>/path/finder</code></p></li>
+</ul>
+
+</div><div class='slide'><h1>Megasplat</h1>
+
+<pre class='snippet sh-perl'>
+get &#39;/tags/**&#39; =&gt; sub {
+    my ( $tags ) = splat;
+
+    return &#39;tags selected: &#39; . join &#39;,&#39;, @$tag;
+}
+</pre>
+
+<ul>
+<li><p>matches <code>/tags/dancer</code></p></li>
+<li><p>and <code>/tags/dancer/web/stuff</code></p></li>
+</ul>
+
+</div><div class='slide'><h1>Good ol' Regexps</h1>
+
+<pre class='snippet sh-perl'>
+put qr#^/plate/(cake|pie)/slice/(\d+)$# =&gt; sub {
+    my( $food, $slices ) = splat;
+
+    return &quot;yum, delicious $food &quot; x $slices;
+};
+</pre>
+
+<ul>
+<li><p>matches <code>/plate/cake/slice/1</code></p></li>
+<li><p>but not <code>/plate/icecream/slice/3</code></p></li>
+</ul>
+
+</div><div class='slide'><h1>Flow control and co</h1>
+
+<h2>prefix</h2>
+
+<pre class='snippet sh-perl'>
+
+prefix &#39;/foo&#39;;
+
+get &#39;/bar&#39; =&gt; sub { ... };
+</pre>
+
+<h2>pass</h2>
+
+<pre class='snippet sh-perl'>
+get &#39;/user/:name&#39; =&gt; sub {
+    # yanick is &quot;special&quot;
+    pass if param(&#39;name&#39;) eq &#39;yanick&#39;;
+    ...
+};
+
+get &#39;/user/yanick&#39; =&gt; sub {
+    ...
+};
+</pre>
+
+<h2>halt</h2>
+
+<pre class='snippet sh-perl'>
+post &#39;/movie/:title&#39; =&gt; sub {
+    halt(&quot;disk is full&quot;) if disk_usage() &gt; 0.90;
+    ...
+};
+</pre>
+
+</div><div class='slide'><h1>Flow control and co</h1>
+
+<h2>send_error</h2>
+
+<pre class='snippet sh-perl'>
+send_error &quot;wut?&quot;, 404;
+</pre>
+
+<h2>send_file</h2>
+
+<pre class='snippet sh-perl'>
+
+get &#39;/puppy&#39; =&gt; sub {
+    my $file = $puppy_pic[rand @puppy_pic];
+    send_file $file;
+};
+
+</pre>
+
+<h2>upload</h2>
+
+<pre class='snippet sh-perl'>
+post &#39;/upload&#39; =&gt; sub {
+    my $up = upload(&#39;foo&#39;);
+    my $content = $up-&gt;content;
+    ...
+};
+</pre>
+
+</div><div class='slide'><h1>Flow control and co</h1>
+
+<h2>forward</h2>
+
+<pre class='snippet sh-perl'>
+get &#39;/this&#39; =&gt; sub {
+    forward &#39;/that&#39;;
+};
+</pre>
+
+<h2>redirect</h2>
+
+<pre class='snippet sh-perl'>
+get &#39;/search/:term&#39; =&gt; sub {
+    redirect &#39;http://google.ca/?s=&#39; . param(&#39;term&#39;);
+};
+</pre>
+
+</div><div class='slide'><h1>Templates</h1>
+
+<pre class='snippet sh-perl'>
+get &#39;/about&#39; =&gt; sub {
+    return q{ 
+        &lt;html&gt;
+            &lt;body&gt;
+                &lt;h1&gt;This is my app&lt;/h1&gt;
+            &lt;/body&gt;
+        &lt;/html&gt;
+    };
+};
+</pre>
+
+<h2>Yuck</h2>
+
+</div><div class='slide'><h1>Templates</h1>
+
+<pre class='snippet sh-perl'>
+get &#39;/about&#39; =&gt; sub {
+    template &#39;about&#39; =&gt; {
+        app_name =&gt; &#39;Milky Way War&#39;
+    };
+};
+</pre>
+
+</div><div class='slide'><h1>In 'about.mason'</h1>
+
+<pre class='snippet sh-html'>
+&lt;%args&gt;
+$game_name
+&lt;/%args&gt;
+&lt;html&gt;
+    &lt;body&gt;
+        &lt;h1&gt;&lt;% $game_name %&gt;&lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+</div><div class='slide'><h1>'about.mason' with layouts</h1>
+
+<pre class='snippet sh-html'>
+&lt;%args&gt;
+$game_name
+&lt;/%args&gt;
+&lt;h1&gt;&lt;% $game_name %&gt;&lt;/h1&gt;
+</pre>
+
+</div><div class='slide'><h1>in <code>config.yml</code></h1>
+
+<pre class='snippet sh-c'>
+template: mason
+
+engines:
+    mason:
+        default_escape_flags: [&#39;h&#39;]
+</pre>
+
+</div><div class='slide'><h1>Template Choices</h1>
+
+<h2>Dancer::Template::*</h2>
+
+<ul>
+<li><a href="http://p3rl.com/Dancer-Template-Alloy">Alloy</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Ctpp2">Ctpp2</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Haml">Haml</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-HtmlTemplate">HtmlTemplate</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Mason">Mason</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Mason2">Mason2</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-MicroTemplate">MicroTemplate</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-MojoTemplate">MojoTemplate</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Semantic">Semantic</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Simple">Simple</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-TemplateFlute">TemplateFlute</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-TemplateSandbox">TemplateSandbox</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-TemplateToolkit">TemplateToolkit</a></li>
+</ul>
+
+</div><div class='slide'><h1>More Template Choices</h1>
+
+<ul>
+<li><a href="http://p3rl.com/Dancer-Template-Tenjin">Tenjin</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Tiny">Tiny</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Xslate">Xslate</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-TemplateDeclare">TemplateDeclare</a></li>
+<li><a href="http://p3rl.com/Dancer-Template-Caribou">Caribou</a></li>
+</ul>
+
+</div><div class='slide'><h1>AJAX</h1>
+
+<h2>Serializers FTW!</h2>
+
+<pre class='snippet sh-perl'>
+set serializer =&gt; &#39;JSON&#39;;
+
+get &#39;/webpage&#39; =&gt; sub {
+    return &quot;totally normal webpage&quot;;
+};
+
+get &#39;/ajaxy&#39; =&gt; sub {
+    my $struct = {
+        name         =&gt; &#39;Sammy&#39;,
+        seals_broken =&gt; [ 3, 6, 66 ],
+    };
+
+    return $struct;
+};
+
+# PUT &quot;{ name: &#39;Dean&#39; }&quot;
+put &#39;/ajaxy&#39; =&gt; sub {
+    my $name = request-&gt;body-&gt;{name};
+
+    return &quot;Hi $name&quot;;
+};
+</pre>
+
+</div><div class='slide'><h1>More easy</h1>
+
+<pre class='snippet sh-perl'>
+set serializer =&gt; &#39;Mutable&#39;;
+
+get &#39;/ajaxy&#39; =&gt; sub {
+    my $struct = {
+        name         =&gt; &#39;Sammy&#39;,
+        seals_broken =&gt; [ 3, 6, 66 ],
+    };
+
+    return $struct;
+};
+
+# PUT &quot;{ name: &#39;Dean&#39; }&quot;
+put &#39;/ajaxy&#39; =&gt; sub {
+    my $name = request-&gt;body-&gt;{name};
+
+    return &quot;Hi $name&quot;;
+};
+</pre>
+
+</div><div class='slide'><h1>MOAR EASY!</h1>
+
+<pre class='snippet sh-perl'>
+use Dancer::Plugin::REST;
+
+prepare_serializer_for_format;
+
+resource &#39;/ajaxy&#39; =&gt; 
+    get    =&gt; sub { ... },
+    create =&gt; sub { ... },
+    delete =&gt; sub { ... },
+    update =&gt; sub { ... };
+</pre>
+
+<h2>Defines the following routes</h2>
+
+<ul>
+<li>GET /ajaxy/:id</li>
+<li>GET /ajaxy/:id.:format</li>
+<li>POST /ajaxy</li>
+<li>POST /ajaxy.:format</li>
+<li>DELETE /ajaxy/:id</li>
+<li>DELETE /ajaxy/:id.:format</li>
+<li>PUT /ajaxy/:id</li>
+<li>PUT /ajaxy/:id.:format</li>
+</ul>
+
+</div><div class='slide'><h1>Helper functions too</h1>
+
+<pre class='snippet sh-perl'>
+resource &#39;/user&#39; =&gt; 
+    get =&gt; sub {
+        my $user = find_user( param(&#39;id&#39;) )
+            or returns status_not_found( &quot;all sad :-(&quot; );
+
+        return status_ok({
+            name =&gt; $user-&gt;name,
+            age  =&gt; $user-&gt;age,
+        });
+    };
+</pre>
+
+</div><div class='slide'><h1>Plugins</h1>
+
+<p>Dancer::Plugin::*</p>
+
+<ul>
+<li><a href="http://p3rl.com/Dancer-Plugin-SMS">SMS </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-FormattedOutput">FormattedOutput </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-XML-RSS">XML-RSS </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Thumbnail">Thumbnail </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-NYTProf">NYTProf </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Cache-CHI">Cache-CHI </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Memcached">Memcached </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Email">Email </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-MobileDevice">MobileDevice </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-FlashMessage">FlashMessage </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Params-Normalization">Params-Normalization </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Auth-RBAC">Auth-RBAC </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Captcha-SecurityImage">Captcha-SecurityImage </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Mongo">Mongo </a></li>
+</ul>
+
+</div><div class='slide'><h1>More Plugins</h1>
+
+<ul>
+<li><a href="http://p3rl.com/Dancer-Plugin-ORMesque">ORMesque </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Authorize">Authorize </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-REST">REST </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Fake-Response">Fake-Response </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Auth-Twitter">Auth-Twitter </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-DebugDump">DebugDump </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-GearmanXS">GearmanXS </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-ValidationClass">ValidationClass </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-MPD">MPD</a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Scoped">Scoped </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-DataFu">DataFu </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Feed">Feed </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Auth-RBAC-Credentials-DBIC">Auth-RBAC-Credentials-DBIC </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-EscapeHTML">EscapeHTML </a></li>
+</ul>
+
+</div><div class='slide'><h1>Even More Plugins</h1>
+
+<ul>
+<li><a href="http://p3rl.com/Dancer-Plugin-Browser">Browser </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Cache">Cache </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Async">Async </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-DebugToolbar">DebugToolbar </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-WebSocket">WebSocket </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-SiteMap">SiteMap </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Bcrypt">Bcrypt </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Facebook">Facebook </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-FormValidator">FormValidator </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-SporeDefinitionControl">SporeDefinitionControl </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Redis">Redis </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Database">Database </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-SimpleCRUD">SimpleCRUD </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-MemcachedFast">MemcachedFast </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-TimeRequests">TimeRequests </a></li>
+</ul>
+
+</div><div class='slide'><h1>Last of the Plugins (for now)</h1>
+
+<ul>
+<li><a href="http://p3rl.com/Dancer-Plugin-ProxyPath">ProxyPath </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-Progress">Progress </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-DBIC">DBIC </a></li>
+<li><a href="http://p3rl.com/Dancer-Plugin-FlashNote">FlashNote</a></li>
+</ul>
+
+</div><div class='slide'><h1>Typical Use</h1>
+
+<p>config file:</p>
+
+<pre class='snippet sh-c'>
+plugins:
+    &#39;Cache::CHI&#39;:
+        driver: Memory
+        global: 1
+        expires_in: 3600
+</pre>
+
+<p>in the code:</p>
+
+<pre class='snippet sh-perl'>
+use Dancer::Plugin::Cache::CHI
+
+get &#39;/expensive/action&#39; =&gt; sub {
+    # lots of processing-intensive stuff
+
+    cache_page template &#39;expensive&#39;;
+}
+</pre>
+
+</div><div class='slide'><h1>Hooks</h1>
+
+<pre class='snippet sh-perl'>
+use Dancer::Plugin::MobileDevice;
+
+get &#39;/&#39; =&gt; sub {
+    set layout =&gt; &#39;mobile&#39; if is_mobile_device;
+
+    ...
+};
+</pre>
+
+</div><div class='slide'><h1>Do It Once</h1>
+
+<pre class='snippet sh-perl'>
+hook before =&gt; sub {
+    set layout =&gt; &#39;mobile&#39; if is_mobile_device;
+};
+</pre>
+
+</div><div class='slide'><h1>We have... a few of them</h1>
+
+<ul>
+<li>before_deserializer</li>
+<li>before_file_render</li>
+<li>before_error_init</li>
+<li>before_error_render</li>
+<li>before</li>
+<li>before_template_render</li>
+<li>before_layout_render</li>
+<li>before_serialization</li>
+<li>after_deserializer</li>
+<li>after_file_render</li>
+<li>after_template_render</li>
+<li>after_layout_render</li>
+<li>after</li>
+<li>after_error_render</li>
+</ul>
+
+</div><div class='slide'><h1>Testing</h1>
+
+<pre class='snippet sh-perl'>
+use Test::More tests =&gt; 3;
+use strict;
+use warnings;
+
+use mww;
+use Dancer::Test;
+
+route_exists [GET =&gt; &#39;/&#39;];
+response_status_is [&#39;GET&#39; =&gt; &#39;/&#39;], 200;
+
+response_content_like [ &#39;GET&#39; =&gt; &#39;/timestamp&#39; ], 
+    qr/stardate \d{16}/;
+</pre>
+
+</div><div class='slide'><h1>Thank You!</h1>
+
+<div class="vcenter">
+
+<h2 align="center">Questions?</h2>
+
+</div>
+
+</div><div class='slide'><h1>PSGI</h1>
+
+<p><a href="https://github.com/miyagawa/psgi-specs">Perl Web Server Gateway Interface Specification</a></p>
+
+<p>Inspired by Ruby's Rack and Python's WSGI.</p>
+
+<pre><code># syntax: perl
+my $app = sub {
+    my $env = shift;
+    return [
+        '200',
+        [ 'Content-Type' =&gt; 'text/plain' ],
+        [ "Hello World" ], # or IO::Handle-like object
+    ];
+};
+</code></pre>
+
+</div><div class='slide'><h1><a href="http://plackperl.org/">Plack</a></h1>
+
+<p>PSGI toolkit and middleware.</p>
+</div>
+
+
+
+<script>
+
+/*$('h1').each(function(){
+   $(this).nextUntil('h1').andSelf().wrapAll( $('<div class="slide"/>') ) ;
+});
+$('.slide .slide').each(function(){ $(this).parent().html( $(this).children()) });
+*/
+$('.slide').slippy();
+</script>
+</body>
+</html>
