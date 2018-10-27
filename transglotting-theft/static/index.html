@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Transfixing Tales of Transglotting Thefts</title>
+          <meta property="og:title" content="Transfixing Tales of Transglotting Thefts">
+          <meta property="og:type" content="website">
+          <meta property="og:image" content="https://yanick.github.io/talks/transglotting-theft/featured-slide.jpg">
+          <meta property="og:url" content="https://yanick.github.io/talks/transglotting-theft">
+        <link rel="stylesheet" href="./css/reveal.css">
+        <link rel="stylesheet" href="./css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="./css/highlight/zenburn.css">
+        <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print">
+
+
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides"><section  data-markdown><script type="text/template">
+
+## To JavaScript and Back
+
+*Transfixing Tales of Transglotting Thefts*
+
+<div>&nbsp;</div>
+
+Yanick Champoux 
+
+[yanick.champoux@iinteractive.com](mailto:yanick.champoux@iinteractive.com)
+
+twitter: [@yenzie](https://twitter.com/yenzie)
+
+</script></section><section  data-markdown><script type="text/template">
+
+## So I've been traveling the JS landscape
+
+</script></section><section  data-markdown><script type="text/template">
+
+# ![JavaScript ecosystem](public/bosch.jpg)
+
+</script></section><section  data-markdown><script type="text/template">
+
+## On the menu
+
+* [Redux](http://redux.js.org) -> [Pollux][]
+* [MobX](https://github.com/mobxjs/mobx) -> [MoobX][]
+* JSX -> [Template::Caribou][]
+
+[Pollux]: https://metacpan.org/release/Pollux
+[MoobX]:  https://metacpan.org/release/MoobX
+[Template::Caribou]:  https://metacpan.org/release/Template-Caribou
+
+
+</script></section><section  data-markdown><script type="text/template">
+
+# Redux
+
+</script></section><section  data-markdown><script type="text/template">
+
+## (also kinda)
+
+* Flux
+* VueX
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Goals
+
+* Simplicity
+* Consistency
+* Predictability
+
+</script></section><section  data-markdown><script type="text/template">
+
+## How?
+
+* Centralize the state
+* Once set, the state can't be changed
+* Can't manipulate the state directly
+
+</script></section><section  data-markdown><script type="text/template">
+
+## So, basically...
+
+![Redux in a nutshell](public/kirk-spock.jpg)
+
+
+<aside class='notes'>JavaScript ecosystem</aside>
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+# Centralized
+
+</script></section><section data-markdown><script type="text/template">
+
+# Not
+
+![objects everywhere](public/messy.jpg)
+
+</script></section><section data-markdown><script type="text/template">
+
+# Instead
+
+![what's in the box](public/Box.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+## state = plain old data structure
+
+	my $state = {
+		players = {
+			yenzie => { ships => [ 1 ] },
+		},
+		ships => [
+			{ name => 'Muscular Revenge', id => 1 },
+		]
+	};
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+# Consistency
+
+</script></section><section data-markdown><script type="text/template">
+
+## what's the problem?
+
+	my $ship  = { id => 1, coords => [ 10, 10 ] };
+	my $state = { ships => [ $ship ] };
+
+	...
+
+	$state->{ships}[0]{coords}[0] = 20;
+
+</script></section><section data-markdown><script type="text/template">
+
+## take II
+
+	my $ship  = { id => 1, coords => [ 10, 10 ] };
+	my $state = { ships => [ $ship ] };
+
+	...
+
+	$ship->{coords} = [ 20, 20 ];
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## cue in immutability
+
+</script></section><section data-markdown><script type="text/template">
+
+## How does Redux does it? 
+
+![Immutability](public/grass.jpg) 
+
+</script></section><section data-markdown><script type="text/template">
+
+## [Const::Fast](https://metacpan.org/release/Const-Fast)
+
+	use Const::Fast;
+
+	my $ship =  { id => 1, coords => [ 10, 10 ] };
+
+	const my $store => { ships => [ $ship ] };
+
+	...
+
+	$ship->{coords} = [ 20, 20 ]; # don't care
+
+	$store->{ships}[0][0] = 12;   # nope, denied
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## okay then, how do we modify states?
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+# Arrays
+
+</script></section><section data-markdown><script type="text/template">
+
+## add
+
+	@new = ( @old, 'foo' );
+
+	@new = ( 'foo', @old );
+
+</script></section><section data-markdown><script type="text/template">
+
+## remove
+
+	# remove first
+
+	@new = @old[1 ..$#old];
+
+	(undef,@new) = @old;
+
+	# remove last
+
+	@new = @old[0 ..$#old-1];
+
+</script></section><section data-markdown><script type="text/template">
+
+## remove head/tail chunk
+
+	@new = before { $_ eq 'enough' } @old;
+
+	@new = after { $_ eq 'enough' } @old;
+
+</script></section><section data-markdown><script type="text/template">
+
+## [List::AllUtils](https://metacpan.org/releases/List-AllUtils)
+
+List::Util / List::MoreUtils / List::UtilBy
+
+</script></section><section data-markdown><script type="text/template">
+
+## remove specific element(s)
+
+	@new = grep { is_keeper($_) } @old;
+
+</script></section><section data-markdown><script type="text/template">
+
+## transform
+
+	@new = map { do_things_to($_) } @old;
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+# Hashes
+
+</script></section><section data-markdown><script type="text/template">
+
+## add or modify element(s)
+
+	%new = ( %old, foo => 'bar' );
+
+</script></section><section data-markdown><script type="text/template">
+
+## pick subset of elements
+
+	%new = %old{ grep { is_keeper($_) } keys %old };
+
+	%new = pairgrep { is_keeper($a) } %old;
+
+</script></section><section data-markdown><script type="text/template">
+
+## transform
+
+	%new = pairmap { do_things_to($a,$b) } %old;
+
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## So we have a store we can't modify...
+
+yay?
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Messaging
+
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Store + Message => Store
+
+![Store + Message](public/apple.jpg)
+
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Message
+
+Type, Payload
+
+	{
+	  type  => 'ADD_PLAYER',
+	  name  => 'yenzie',
+	}
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## message's mutation 
+
+* Deterministic
+* No side-effects
+
+store_1 + message_1 = store_2
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+   you ---> message ---> store
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+   you ---> middleware --> message ---> store
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+you --> m/w --> message ---> store --> observers 
+   
+   
+^-------------------------------------------'
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Reducer
+
+	$new_state = reducer( $old_state, $action );	
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```
+my $store = {
+	players = {
+		yenzie => [ 1 ],
+	},
+	ships => [
+		{ name => 'Muscular Revenge', id => 1 },
+	]
+};
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+{
+	type  => 'ADD_PLAYER',
+	name  => 'olaf',
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+sub players_reducer($state,$action) {
+
+	given ($action->{type}) {
+
+		when( 'ADD_PLAYER' ) {
+			return { 
+				%$state,
+				$action->{name} => []
+			}
+		}
+
+		default { return $state };
+  }
+
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+sub ships_reducer($state,$action) {
+
+	given ($action->{type}) {
+
+		default { return $state };
+  }
+
+}
+```
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+{
+	type  => 'ADD_SHIP',
+	player => 'yenzie',
+	id	 => 1,
+	name  => 'Desperate Measure',
+}
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+sub players_reducer($state,$action) {
+  given ($action->{type}) {
+
+	return { %$state,
+	  $action->{name} => [] 
+	} when 'ADD_PLAYER';
+
+	return { 
+		pairmap {
+			$a => $a eq $action->{player} 
+			? [ @$b, $action->{id} ] 
+			: $b 
+		} %$state 
+	} when 'ADD_SHIP';
+
+	default { return $state };
+  }
+}
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+sub ships_reducer($state,$action) {
+  given ($action->{type}) {
+
+	return [ 
+		@$state,
+		{ $action->%{ 'id', 'name' } }
+	] when 'ADD_SHIP';
+
+	default { return $state };
+  }
+}
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+sub main_reducer($state,$action) {
+	return {
+		players => players_reducer(
+			$state->{players}, $action 
+		),
+		ships => ships_reducer(
+			$state->{ships}, $action 
+		),
+	}
+}
+```
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+# Pollux
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+use Pollux;
+use Pollux::Action;
+
+my $store = Pollux->new(
+	reducer => {
+		visibility_filter => \&visibility_filter,
+		todos			 => \&todos
+	},
+);
+
+```
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+sub visibility_filter($action, $state = 'SHOW_ALL' ) {
+	given ( $action ) {
+		return $action->{filter} when $SetVisibilityFilter;
+
+		default { return $state }
+	}
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+my $AddTodo = Pollux::Action->new( 'ADD_TODO', 'text' );
+my $CompleteTodo = Pollux::Action->new(
+  'COMPLETE_TODO', 'index'
+);
+my $SetVisibilityFilter = Pollux::Action->new(
+  'SET_VISIBILITY_FILTER', 'filter'
+);
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+$store->dispatch($AddTodo->('Learn about actions'));
+```
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+# MobX
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Reactive programming
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+
+my $hull = 10;
+
+my $ship_status = $hull > 0 ? 'operative' : 'destroyed';
+
+...
+
+$hull -= 12;
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+
+has hull => (
+  is => 'rw',
+  trigger => sub($self,$new,$old) {
+	$self->ship_status('destroyed') if $new <= 0;
+  },
+);
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+
+my $hull = 10;
+
+my $ship_status = observer {
+  $hull > 0 ? 'operative' : 'destroyed';
+};
+
+$hull -= 10;
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+# But how?
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+* Use PPI abd B::Deparse to inspect the code. 
+* Figure out execution branching
+* ...
+
+</script></section><section  data-markdown><script type="text/template">
+
+## ![nope, just nope](public/killing-joke.jpg)
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+
+my $hull :Observable = 10;
+my $engine :Observable = 20;
+my $name :Observable = 'Resentful Retribution';
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+my $status = observer {
+  return 'destroyed' if $hull <= 0;
+
+  return 'damaged' if 5 > min $hull, $engine;
+
+  return 'fully operational';
+};
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+ # $hull = 10  ✋
+ # $engine = 20 ✋
+ # $name = 'RR'  
+
+my $status = observer {
+  return 'destroyed' if $hull <= 0;
+
+  return 'damaged' if 5 > min $hull, $engine;
+
+  return 'fully operational';
+};
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+$hull $engine
+  \	 /
+	v  v
+	$status
+```
+
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+ # $hull = 10  ✋
+ # $engine = 5 ✋
+ # $name = 'RR'  
+
+my $status = observer {
+  return 'destroyed' if $hull <= 0;
+
+  return 'damaged' if 5 > min $hull, $engine;
+
+  return 'fully operational';
+};
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+ # $hull = 0  ✋
+ # $engine = 5 
+ # $name = 'RR'  
+
+my $status = observer {
+  return 'destroyed' if $hull <= 0;
+
+  return 'damaged' if 5 > min $hull, $engine;
+
+  return 'fully operational';
+};
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+## But how?
+
+</script></section><section  data-markdown><script type="text/template">
+
+## With Moose Attributes?
+
+Easy peasy
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+
+has hull => (
+  is => 'rw',
+  traits => [ 'Observable' ],
+);
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+
+after initialize_instance_slot => sub {
+	my( $self, $meta, $instance, $params ) = @_;
+
+	$instance->meta->add_before_method_modifier(
+		$self->get_read_method, sub {
+			push @MoobX::DEPENDENCIES,
+				[ $instance, $self->name ]
+				if $MoobX::WATCHING;
+		});
+
+	$instance->meta->add_after_method_modifier(
+		$self->get_write_method, sub {
+			MoobX::changing_observable(
+				[ $instance, $self->name ] 
+			);
+	});
+};
+
+```
+</script></section><section ><section data-markdown><script type="text/template">
+
+
+
+```perl
+
+has status => (
+  traits => [ 'Observer' ],
+  is => 'ro',
+  lazy => 1,
+  default => sub { ...  },
+);
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+sub around_observer {
+	my $self = shift;
+
+	local $MoobX::WATCHING = 1;
+	local @MoobX::DEPENDENCIES = @MoobX::DEPENDENCIES;
+
+	my $new_value = $self->default->();
+
+	local $Carp::CarpLevel = 2;
+	carp "MoobX observer doesn't observe anything"
+		unless @MoobX::DEPENDENCIES;
+
+	MoobX::dependencies_for( $self, @MoobX::DEPENDENCIES );
+
+	return $new_value;
+}
+```
+
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## without Moose?
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Tie!
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+package MoobX::Scalar; 
+
+use Moose;
+
+has value => (
+	is	 => 'rw',
+	writer => 'STORE',
+);
+
+sub FETCH	 { $_[0]->value }
+
+sub TIESCALAR { $_[0]->new( value => $_[1]) }
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+package MoobX::Scalar::Observable;
+
+use Moose::Role;
+
+before 'FETCH' => sub($self) {
+	push @MoobX::DEPENDENCIES, $self if $MoobX::WATCHING;
+};
+
+after 'STORE' => sub ($self) {
+	MoobX::observable_ref($self->value) if ref $self->value;
+	MoobX::observable_modified( $self );
+};
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+sub Observable :ATTR(SCALAR) {
+	my (undef, undef, $referent) = @_;
+
+	MoobX::observable_ref($referent);
+}
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+sub observable_ref($ref) {
+	my $type = reftype $ref;
+
+	my $class = 'MoobX::'. ucfirst lc  $type || 'SCALAR';
+	$class = with_traits( 
+		map { use_module($_) }
+		map { $_, $_ . '::Observable' } $class
+	);
+	if( $type eq 'SCALAR' ) {
+		my $value = $$ref;
+		tie $$ref, $class;
+		$$ref = $value;
+	}
+	return $ref;
+}
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+sub observer :prototype(&) {
+	MoobX::Observer->new( generator => @_ ) 
+}
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+package MoobX::Observer;
+
+use overload '""' => sub { $_[0]->value };
+
+use MooseX::MungeHas 'is_ro';
+
+has generator => ( required => 1 );
+
+has value => ( 
+	builder => 1,
+	lazy => 1,
+	predicate => 1,
+	clearer => 1,
+);
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+sub _build_value {
+	my $self = shift;
+
+	local $MoobX::WATCHING = 1;
+	local @MoobX::DEPENDENCIES = @MoobX::DEPENDENCIES;
+
+	my $new_value = $self->generator->();
+
+	local $Carp::CarpLevel = 2;
+	carp "MoobX observer doesn't observe anything"
+		unless @MoobX::DEPENDENCIES;
+
+	MoobX::dependencies_for( $self, @MoobX::DEPENDENCIES );
+
+	return $new_value;
+}
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+# Template::Caribou
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+Most templating languages implement micro-languages to get around Perl's
+scariness
+
+</script></section><section  data-markdown><script type="text/template">
+
+# ![mish-mash](public/chimera.jpg)
+
+</script></section><section  data-markdown><script type="text/template">
+
+## But I like Perl!
+
+</script></section><section  data-markdown><script type="text/template">
+
+## mason
+
+![mason](public/mason.png)
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Template::Declare
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+* purely perl
+* for HTML/XML/SVG
+* Moose-based, with roles and stuff
+* DWIM to the hilt
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+package MyTemplate;
+
+use Template::Caribou;
+
+has name => ( is => 'ro' );
+
+template main => sub($self) {
+	say "hi " . $self->name;
+};
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+say MyTemplate->new( name => 'Yanick' )->main;
+```
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+
+
+```perl
+use Template::Caribou::Tags::HTML ':all';
+
+template main => sub($self) {
+	$self->head_section; 
+	$self->body_section;
+};
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+
+
+```perl
+
+template head_section => sub {
+	head { 
+		title { 'my title' };
+	}
+};
+
+template body_section => sub($self) {
+	body { "hi " . $self->name; }
+};
+```
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+template body_section => sub($self) {
+	body { 
+		div { attr class => 'greeting';
+			"hi " . $self->name; 
+		}
+	}
+};
+
+ # <div class="greeting">hi Yanick</div>
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+use Template::Caribou::Tags 
+	mytag => { -as => 'div_greeting', class => 'greeting' };
+
+template body_section => sub($self) {
+	body { 
+		div_greeting {
+			"hi " . $self->name; 
+		}
+	}
+};
+
+ # <div class="greeting">hi Yanick</div>
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+## T::C::Tags::HTML::Extended
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+ # <link rel="shortcut icon" href="blah.png" />
+
+link {
+	attr rel => 'shortcut icon', href => 'blah.png';
+	return;
+};
+```
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+favicon 'blah.png';
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+link { attr rel =>'stylesheet', href => '...' };
+
+script { attr src => '...' };
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+css_include 'public/blah.css';
+
+javascript_include 'public/blah.js';
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+
+div {
+	markdown q{
+		...and then I realized that I could 
+		*totally* do without HTML!
+
+		that felt ![amazing](happy.jpg)
+	};
+}
+
+```
+
+</script></section><section  data-markdown><script type="text/template">
+
+
+
+```perl
+
+with 'Template::Caribou::Files';
+
+```
+</script></section></div>
+        </div>
+
+        <script src="./lib/js/head.min.js"></script>
+        <script src="./js/reveal.js"></script>
+
+        <script>
+            function extend() {
+              var target = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) {
+                  if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                  }
+                }
+              }
+              return target;
+            }
+
+            // Optional libraries used to extend on reveal.js
+            var deps = [
+              { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+              { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: './plugin/zoom-js/zoom.js', async: true },
+              { src: './plugin/notes/notes.js', async: true },
+              { src: './plugin/math/math.js', async: true }
+            ];
+
+            // default options to init reveal.js
+            var defaultOptions = {
+              controls: true,
+              progress: true,
+              history: true,
+              center: true,
+              transition: 'default', // none/fade/slide/convex/concave/zoom
+              dependencies: deps
+            };
+
+            // options from URL query string
+            var queryOptions = Reveal.getQueryHash() || {};
+
+            var options = {};
+            options = extend(defaultOptions, options, queryOptions);
+        </script>
+
+
+        <script>
+          Reveal.initialize(options);
+        </script>
+    </body>
+</html>
