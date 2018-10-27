@@ -3,7 +3,7 @@ version: 2
 vars:
     slides: toronto.md 
     url: https://yanick.github.io/talks/transglotting-theft
-    featured_slide: 0
+    featured_slide: 17
     reveal_args: --preprocessor groom.js
 
 tasks:
