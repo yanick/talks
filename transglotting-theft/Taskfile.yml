@@ -1,0 +1,27 @@
+version: 2
+
+vars:
+    slides: toronto.md 
+    url: https://yanick.github.io/talks/transglotting-theft
+    featured_slide: 0
+    reveal_args: --preprocessor groom.js
+
+tasks:
+    static:
+        cmds:
+            - reveal-md --absolute-url {{.url}} --featured-slide {{.featured_slide}} --static  static --static-dirs=public/ --preprocessor groom.js {{ .slides }}
+            # because hyde doesn't like the underscore (well, it hides it)
+            # - rm -fr static/assets
+            # - mv static/_assets static/assets 
+            # - perl -i -pe's/_(?=assets)//g' static/index.html
+
+
+    toc:
+        sources: [ '{{ .slides }}' ]
+        cmds:
+            - perl -nE'say "\t" x length $1, $2 if /<!-- (#+)(.*) -->/' {{.slides}}
+
+    showtime:
+        desc: SHOWTIME BABY!
+        cmds:
+            - reveal-md {{ .reveal_args }} --watch {{ .slides }}
