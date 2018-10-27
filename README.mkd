@@ -20,8 +20,8 @@ The slides are licensed under [CC-BY](https://github.com/yanick/talks/tree/maste
 ### To JavaScript And Back, Transfixing Tales of Transglotting Thefts - Toronto Perl Mongers, April 2017
 
 [video](https://www.youtube.com/watch?v=Ehl9VAYzfcg) /
-[slides](https://yanick.github.io/talks/Transglotting-theft/static) /
-[source](https://github.com/yanick/talks/tree/master/Transglotting-theft) 
+[slides](https://yanick.github.io/talks/transglotting-theft/static) /
+[source](https://github.com/yanick/talks/tree/master/transglotting-theft) 
 
 ### InfluxDB - Ottawa Big Data, January 2017
 
