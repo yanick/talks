@@ -1,0 +1,13 @@
+1..5
+ok 1
+ok 2 - does the thing
+not ok 3 - does it well
+not ok 4 - does that other thing # TODO not implemented yet
+#   Failed (TODO) test 'does that non-implemented thing'
+#   at lab/test.t line 13.
+# Subtest: group of test
+    ok 1 - yay
+    not ok 2 - oh my
+    1..2
+not ok 5 - group of test
+# Looks like you failed 2 test of 5.

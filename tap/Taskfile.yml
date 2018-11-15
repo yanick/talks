@@ -1,0 +1,25 @@
+version: 2
+
+vars:
+    slides: tap.md 
+    url: https://yanick.github.io/talks/tap
+    featured_slide: 0
+
+tasks:
+    static:
+        cmds:
+            - reveal-md --absolute-url {{url}} --featured-slide {{featured_slide}} --static static --static-dirs=public/ --scripts ./trimmings/footer.js --preprocessor ./trimmings/groom.js --css ./trimmings/style.css {{ slides }}
+            - rm -fr static/assets
+            - mv static/_assets static/assets 
+            - perl -i -pe's/_(?=assets)//g' static/index.html
+
+    toc:
+        sources: [ ./tap.md ]
+        cmds:
+            - perl -nE'say "\t" x length $1, $2 if /<!-- (#+)(.*) -->/' tap.md
+
+    showtime:
+        desc: SHOWTIME BABY!
+        cmds:
+            - reveal-md --scripts ./public/languages/tap.js  --scripts ./trimmings/footer.js --watch --preprocessor trimmings/groom.js --css trimmings/style.css  {{ slides }}
+

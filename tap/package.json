@@ -1,0 +1,19 @@
+{
+  "name": "tpm-2018-11",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Yanick Champoux <yanick@babyl.ca> (http://techblog.babyl.ca)",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^4.1.0",
+    "glob-fs": "^0.1.7",
+    "highlight.js": "^9.13.1",
+    "reveal-code-focus": "^1.1.0",
+    "reveal-md": "^2.3.0"
+  }
+}
