@@ -1,0 +1,55 @@
+.reveal code {
+    font-family: "courier";
+}
+
+.reveal pre code {
+    height: 100% !important;
+    max-height: 100% !important;
+} 
+
+
+figure.title {
+    float: right;
+} 
+
+figcaption {
+    font-size: 60% !important;
+    font-style: italic !important;
+}
+
+section#title p {
+    font-size: 70% !important;    
+}
+    
+p.leftie {
+   text-align: left; 
+} 
+
+.logo {
+  width: 1em;  
+  vertical-align: center;
+  fill: white;
+} 
+
+footer {
+  position:absolute;
+  bottom: 0%;
+  right: 15%;
+  font-size: 14pt !important;
+}
+
+mark { background: #fdf6e3; color: #657b83; }
+
+.line { display: block; }
+.line.focus { background: #fdf6e3; color: #657b83; }
+.line.focus .hljs-comment, .line.focus .hljs-quote { color: #93a1a1; }
+
+
+ .reveal .slides section .fragment.current-only {
+        opacity: 1;
+        visibility: visible;
+        display: none;
+      }
+      .reveal .slides section .fragment.current-only.current-fragment {
+        display: block;
+      }
