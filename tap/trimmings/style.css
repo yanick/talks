@@ -39,3 +39,17 @@ footer {
 }
 
 mark { background: #fdf6e3; color: #657b83; }
+
+.line { display: block; }
+.line.focus { background: #fdf6e3; color: #657b83; }
+.line.focus .hljs-comment, .line.focus .hljs-quote { color: #93a1a1; }
+
+
+ .reveal .slides section .fragment.current-only {
+        opacity: 1;
+        visibility: visible;
+        display: none;
+      }
+      .reveal .slides section .fragment.current-only.current-fragment {
+        display: block;
+      }

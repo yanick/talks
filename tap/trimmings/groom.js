@@ -79,7 +79,7 @@ function codeBlock(lines) {
             line = '<mark>' + line + '</mark>';
         }
 
-        return line.replace( '#', '&#35;' );
+        return line.replace( '#', '&#35;' ).replace( / /g, '&nbsp;' );
     });
 }
 

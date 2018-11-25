@@ -6,6 +6,6 @@
     { "src": "public/revealjs/plugin/zoom-js/zoom.js", "async": true },
     { "src": "public/revealjs/plugin/notes/notes.js", "async": true },
     { "src": "public/highlight.js" },
-    { "src": "public/reveal-code-focus.js", "async": true }
+    { "src": "public/reveal-code-focus.js" }
     ]
 }

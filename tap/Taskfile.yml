@@ -21,5 +21,5 @@ tasks:
     showtime:
         desc: SHOWTIME BABY!
         cmds:
-            - reveal-md --scripts ./public/languages/tap.js  --scripts ./trimmings/footer.js --watch --preprocessor trimmings/groom.js --css trimmings/style.css  {{ slides }}
+            - reveal-md --scripts ./public/languages/tap.js  --scripts ./trimmings/footer.js --watch --preprocessor trimmings/groom.js --css trimmings/style.css  {{ .slides }}
 

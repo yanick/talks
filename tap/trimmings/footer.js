@@ -7,5 +7,8 @@ Reveal.addEventListener( 'ready', function( event ) {
     let sections = document.getElementsByClassName('slides')[0] ;
 
     sections.appendChild( footer );
+
+    console.log('!!!');
+    RevealCodeFocus();
 } );
 
