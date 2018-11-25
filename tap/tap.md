@@ -40,16 +40,6 @@ for Toronto.pm, November 29th, 2018
 
 ## [Test Anything Protocol][TAP]
 
-##
-
-```./includes/tap.tap 
-```
-
-###
-
-```./includes/tap.tap 1
-```
-
 ###
 
 ```tap
@@ -66,8 +56,7 @@ not ok 3 - does it well
 <p class="fragment current-only" data-code-focus="2">success. :-) </p>
 <p class="fragment current-only" data-code-focus="3">with description! 8-D</p>
 <p class="fragment current-only" data-code-focus="4">failed :-(</p>
-<p class="fragment current-only" data-code-focus="5,6">comments</p>
-<p class="fragment current-only" data-code-focus="7">summary</p>
+<p class="fragment current-only" data-code-focus="5-7">comments</p>
 
 ## subtest 
 
@@ -133,11 +122,13 @@ else {
 }
 ```
 
-    1..1
-    not ok 1 - oh noes
-    #   Failed test 'oh noes'
-    #   at t/basic.t line 7.
-    # Looks like you failed 1 test of 1.
+```
+1..1
+not ok 1 - oh noes
+#   Failed test 'oh noes'
+#   at t/basic.t line 7.
+# Looks like you failed 1 test of 1.
+```
 
 ##
 
@@ -158,7 +149,7 @@ ok 1 - success!
 # Looks like you planned 2 tests but ran 1.
 ```
 
-##
+##v
 
 ```
 use Test::More;
@@ -173,7 +164,7 @@ else {
 }
 ```
 
-##
+##v
 
 ```
 use Test::More;
@@ -390,6 +381,18 @@ new, old, fresh
 
     progressive_critic_ok();
 
+### Test::WWW::Mechanize
+
+```
+use Test::WWW::Mechanize;
+
+my $agent = Test::WWW::Mechanize->new'
+
+$agent->get_ok( 'http://techblog.babyl.ca' );
+$agent->title_like( qr/hacking thy fearful symmetry/ );
+
+```
+
 
 ## Mocking 
 
@@ -428,18 +431,10 @@ new, old, fresh
     }
     
 
-### Test::WWW::Mechanize
 
-```
-use Test::WWW::Mechanize;
+## THANK YOU
 
-my $agent = Test::WWW::Mechanize->new'
-
-$agent->get_ok( 'http://techblog.babyl.ca' );
-$agent->title_like( qr/hacking thy fearful symmetry/ );
-
-```
-
+Questions?
 
 
 [TAP]: https://testanything.org/

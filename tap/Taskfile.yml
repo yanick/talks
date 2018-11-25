@@ -8,7 +8,7 @@ vars:
 tasks:
     static:
         cmds:
-            - reveal-md --absolute-url {{url}} --featured-slide {{featured_slide}} --static static --static-dirs=public/ --scripts ./trimmings/footer.js --preprocessor ./trimmings/groom.js --css ./trimmings/style.css {{ slides }}
+            - reveal-md --absolute-url {{.url}} --featured-slide {{.featured_slide}} --static static --static-dirs=public/ --scripts ./trimmings/footer.js --preprocessor ./trimmings/groom.js --css ./trimmings/style.css {{ .slides }}
             - rm -fr static/assets
             - mv static/_assets static/assets 
             - perl -i -pe's/_(?=assets)//g' static/index.html
